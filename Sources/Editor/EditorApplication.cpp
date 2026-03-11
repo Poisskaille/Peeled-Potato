@@ -6,6 +6,7 @@
 #include "Panels/ContentViewerPanel.hpp"
 
 #include <Termina/Renderer/Renderer.hpp>
+#include <Termina/Renderer/UIUtils.hpp>
 #include <Termina/Shader/ShaderManager.hpp>
 
 #include "ImGui/imgui.h"
@@ -56,28 +57,30 @@ void EditorApplication::RenderDockspace()
     ImGui::Begin("##DockspaceRoot", nullptr, windowFlags);
     ImGui::PopStyleVar(3);
 
-    if (ImGui::BeginMenuBar())
+    Termina::UIUtils::PushStylized();
+    if (Termina::UIUtils::BeginMenuBar())
     {
-        if (ImGui::BeginMenu("Termina"))
+        if (Termina::UIUtils::BeginMenu("Termina"))
         {
-            if (ImGui::MenuItem("Quit"))
+            if (Termina::UIUtils::MenuItem("Quit"))
                 m_Running = false;
-            ImGui::EndMenu();
+            Termina::UIUtils::EndMenu();
         }
 
-        if (ImGui::BeginMenu("Layout"))
+        if (Termina::UIUtils::BeginMenu("Layout"))
         {
             for (auto& panel : m_Panels)
             {
                 bool open = panel->IsOpen();
-                if (ImGui::MenuItem(panel->GetName().c_str(), nullptr, open))
+                if (Termina::UIUtils::MenuItem(panel->GetName().c_str(), nullptr, open))
                     panel->SetOpen(!open);
             }
-            ImGui::EndMenu();
+            Termina::UIUtils::EndMenu();
         }
 
-        ImGui::EndMenuBar();
+        Termina::UIUtils::EndMenuBar();
     }
+    Termina::UIUtils::PopStylized();
 
     ImGuiID dockspaceId = ImGui::GetID("DockspaceRoot");
     ImGui::DockSpace(dockspaceId, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_None);

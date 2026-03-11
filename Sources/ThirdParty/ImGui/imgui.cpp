@@ -3892,7 +3892,17 @@ void ImGui::RenderText(ImVec2 pos, const char* text, const char* text_end, bool 
 
     if (text != text_display_end)
     {
-        window->DrawList->AddText(g.Font, g.FontSize, pos, GetColorU32(ImGuiCol_Text), text, text_display_end);
+        if (g.StylizedCapitalFont != NULL && text + 1 <= text_display_end)
+        {
+            float cap_w = g.StylizedCapitalFont->CalcTextSizeA(g.FontSize, FLT_MAX, 0.0f, text, text + 1).x;
+            window->DrawList->AddText(g.StylizedCapitalFont, g.FontSize, pos, GetColorU32(ImGuiCol_Text), text, text + 1);
+            if (text + 1 < text_display_end)
+                window->DrawList->AddText(g.Font, g.FontSize, ImVec2(pos.x + cap_w, pos.y), GetColorU32(ImGuiCol_Text), text + 1, text_display_end);
+        }
+        else
+        {
+            window->DrawList->AddText(g.Font, g.FontSize, pos, GetColorU32(ImGuiCol_Text), text, text_display_end);
+        }
         if (g.LogEnabled)
             LogRenderedText(&pos, text, text_display_end);
     }
@@ -3936,7 +3946,17 @@ void ImGui::RenderTextClippedEx(ImDrawList* draw_list, const ImVec2& pos_min, co
     if (align.y > 0.0f) pos.y = ImMax(pos.y, pos.y + (pos_max.y - pos.y - text_size.y) * align.y);
 
     // Render
-    if (need_clipping)
+    ImGuiContext& g = *GImGui;
+    if (g.StylizedCapitalFont != NULL && text < text_display_end)
+    {
+        ImVec4 fine_clip_rect_stylized(clip_min->x, clip_min->y, clip_max->x, clip_max->y);
+        const ImVec4* clip = need_clipping ? &fine_clip_rect_stylized : NULL;
+        float cap_w = g.StylizedCapitalFont->CalcTextSizeA(draw_list->_Data->FontSize, FLT_MAX, 0.0f, text, text + 1).x;
+        draw_list->AddText(g.StylizedCapitalFont, 0.0f, pos, GetColorU32(ImGuiCol_Text), text, text + 1, 0.0f, clip);
+        if (text + 1 < text_display_end)
+            draw_list->AddText(NULL, 0.0f, ImVec2(pos.x + cap_w, pos.y), GetColorU32(ImGuiCol_Text), text + 1, text_display_end, 0.0f, clip);
+    }
+    else if (need_clipping)
     {
         ImVec4 fine_clip_rect(clip_min->x, clip_min->y, clip_max->x, clip_max->y);
         draw_list->AddText(NULL, 0.0f, pos, GetColorU32(ImGuiCol_Text), text, text_display_end, 0.0f, &fine_clip_rect);
@@ -4209,6 +4229,7 @@ ImGuiContext::ImGuiContext(ImFontAtlas* shared_font_atlas)
     FontBaked = NULL;
     FontSize = FontSizeBase = FontBakedScale = CurrentDpiScale = 0.0f;
     FontRasterizerDensity = 1.0f;
+    StylizedCapitalFont = NULL;
     IO.Fonts = shared_font_atlas ? shared_font_atlas : IM_NEW(ImFontAtlas)();
     if (shared_font_atlas == NULL)
         IO.Fonts->OwnerContext = this;
@@ -9733,6 +9754,11 @@ void  ImGui::PopFont()
     ImFontStackData* font_stack_data = &g.FontStack.back();
     SetCurrentFont(font_stack_data->Font, font_stack_data->FontSizeBeforeScaling, font_stack_data->FontSizeAfterScaling);
     g.FontStack.pop_back();
+}
+
+void ImGui::SetStylizedCapitalFont(ImFont* font)
+{
+    GImGui->StylizedCapitalFont = font;
 }
 
 //-----------------------------------------------------------------------------
