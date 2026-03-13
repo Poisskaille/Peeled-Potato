@@ -52,7 +52,7 @@ void EditorApplication::OnUpdate(float dt)
     auto* renderer = GetSystem<Termina::RendererSystem>();
     float w = static_cast<float>(m_Window->GetWidth());
     float h = static_cast<float>(m_Window->GetHeight());
-    if (!ImGui::GetIO().WantCaptureKeyboard)
+    if (!ImGui::GetIO().WantCaptureKeyboard && !GetSystem<Termina::WorldSystem>()->IsPlaying())
         m_Camera.Update(dt, w, h);
     if (!GetSystem<Termina::WorldSystem>()->IsPlaying())
         renderer->SetCurrentCamera(m_Camera);

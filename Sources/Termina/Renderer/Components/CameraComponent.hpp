@@ -22,6 +22,9 @@ namespace Termina {
         bool IsPrimary() const { return m_Primary; }
         void SetPrimary(bool primary) { m_Primary = primary; }
 
+        void Serialize(nlohmann::json& out) const override;
+        void Deserialize(const nlohmann::json& in) override;
+
         UpdateFlags GetUpdateFlags() const override { return UpdateFlags::UpdateDuringEditor; }
     private:
         Camera m_Camera;

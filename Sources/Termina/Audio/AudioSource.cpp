@@ -50,6 +50,13 @@ namespace Termina {
         }
     }
 
+    void AudioSource::Seek(float positionSeconds)
+    {
+        if (m_Data != nullptr) {
+            ma_sound_seek_to_second(&m_Sound, positionSeconds);
+        }
+    }
+
     void AudioSource::Update()
     {
         ma_sound_set_looping(&m_Sound, m_Looping);
@@ -73,6 +80,6 @@ namespace Termina {
 
     void AudioSource::SetSpatialization(bool spatialization)
     {
-        ma_sound_set_spatialization_enabled(&m_Sound, true);
+        ma_sound_set_spatialization_enabled(&m_Sound, spatialization);
     }
 }

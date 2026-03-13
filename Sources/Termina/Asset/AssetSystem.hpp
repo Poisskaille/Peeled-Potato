@@ -188,6 +188,7 @@ namespace Termina {
         // Owned loader instances — forward-declared to avoid circular includes
         // (TextureLoader.hpp includes AssetSystem.hpp).
         std::unique_ptr<class TextureLoader> m_TextureLoader;
+        std::unique_ptr<class AudioLoader>   m_AudioLoader;
     };
 
     // -------------------------------------------------------------------------

@@ -1,5 +1,6 @@
 #include "AssetSystem.hpp"
 #include "Texture/TextureLoader.hpp"
+#include "Audio/AudioLoader.hpp"
 
 #include <vector>
 
@@ -8,6 +9,9 @@ namespace Termina {
     {
         m_TextureLoader = std::make_unique<TextureLoader>();
         RegisterLoader<TextureAsset>(m_TextureLoader.get());
+
+        m_AudioLoader = std::make_unique<AudioLoader>();
+        RegisterLoader<AudioAsset>(m_AudioLoader.get());
     }
 
     AssetSystem::~AssetSystem()

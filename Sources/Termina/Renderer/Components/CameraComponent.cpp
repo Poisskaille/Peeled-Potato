@@ -44,4 +44,20 @@ namespace Termina {
         ImGui::DragFloat("Far", &m_Camera.Far, 0.01f, 0.01f, 100.0f);
         ImGui::DragFloat("FOV", &m_FOV, 1.0f, 1.0f, 179.0f);
     }
+
+    void CameraComponent::Serialize(nlohmann::json& out) const
+    {
+        out["primary"] = m_Primary;
+        out["near"] = m_Camera.Near;
+        out["far"] = m_Camera.Far;
+        out["fov"] = m_FOV;
+    }
+
+    void CameraComponent::Deserialize(const nlohmann::json& in)
+    {
+        m_Primary = in.value("primary", false);
+        m_Camera.Near = in.value("near", 0.1f);
+        m_Camera.Far = in.value("far", 100.0f);
+        m_FOV = in.value("fov", 75.0f);
+    }
 }

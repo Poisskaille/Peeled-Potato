@@ -9,7 +9,13 @@ namespace Termina {
     AudioAsset* AudioLoader::LoadFromDisk(const std::string& path)
     {
         AudioSystem* system = Application::GetSystem<AudioSystem>();
-        return new AudioAsset(new AudioData(system->GetEngine(), path));
+        AudioData* data = new AudioData(system->GetEngine(), path);
+        if (!data->IsValid())
+        {
+            delete data;
+            return nullptr;
+        }
+        return new AudioAsset(data);
     }
 
     AudioAsset* AudioLoader::LoadFromPackage(const uint8* /*data*/, size_t /*size*/)

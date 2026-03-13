@@ -19,6 +19,9 @@ namespace Termina {
 
         UpdateFlags GetUpdateFlags() const override { return (UpdateFlags)0; }
 
+        void Serialize(nlohmann::json& out) const override;
+        void Deserialize(const nlohmann::json& in) override;
+
     private:
         bool m_Primary = false;
         glm::vec3 m_Velocity = glm::vec3(0.0f);

@@ -10,7 +10,7 @@ namespace Termina {
     {
     public:
         AudioSourceComponent();
-        AudioSourceComponent(Actor* owner) : Component(owner) {}
+        AudioSourceComponent(Actor* owner) : AudioSourceComponent() { SetOwner(owner); }
         ~AudioSourceComponent();
 
         void OnPlay() override;
@@ -29,6 +29,9 @@ namespace Termina {
         bool GetLooping() const { return m_Loop; }
         bool GetSpatialized() const { return m_Spatialized; }
         float GetVolume() const { return m_Volume; }
+
+        void Serialize(nlohmann::json& out) const override;
+        void Deserialize(const nlohmann::json& in) override;
 
         UpdateFlags GetUpdateFlags() const override { return (UpdateFlags)0; }
 
