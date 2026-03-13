@@ -17,11 +17,7 @@ namespace Termina {
     class ScriptModuleManager
     {
     public:
-        static ScriptModuleManager& Get()
-        {
-            static ScriptModuleManager instance;
-            return instance;
-        }
+        static ScriptModuleManager& Get();
 
         // Load a DLL and call its RegisterComponents() entry point.
         // Returns false if already loaded or the DLL fails to open.

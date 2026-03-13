@@ -137,8 +137,8 @@ namespace Termina {
         vk::Rect2D scissor;
         scissor.offset.x = static_cast<int32_t>(left);
         scissor.offset.y = static_cast<int32_t>(top);
-        scissor.extent.width = static_cast<uint>(right - left);
-        scissor.extent.height = static_cast<uint>(bottom - top);
+        scissor.extent.width = static_cast<uint32>(right - left);
+        scissor.extent.height = static_cast<uint32>(bottom - top);
     
         m_Context->GetCommandBuffer().setScissor(0, 1, &scissor);
     }

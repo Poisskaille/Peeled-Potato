@@ -11,7 +11,7 @@ namespace Termina {
 }
 
 #ifdef NDEBUG
-    #define TN_ASSERT(condition, ...) ((void)0)
+    #define TN_ASSERT(condition, ...) if (condition) {}
 #else
     #define TN_ASSERT(condition, ...) \
         do { \

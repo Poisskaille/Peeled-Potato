@@ -40,8 +40,7 @@
     defined(GLFW_INCLUDE_NONE)      || \
     defined(GLFW_INCLUDE_GLEXT)     || \
     defined(GLFW_INCLUDE_GLU)       || \
-    defined(GLFW_INCLUDE_VULKAN)    || \
-    defined(GLFW_DLL)
+    defined(GLFW_INCLUDE_VULKAN)
  #error "You must not define any header option macros when compiling GLFW"
 #endif
 

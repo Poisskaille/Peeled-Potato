@@ -15,7 +15,7 @@ namespace Termina {
         void Run();
         void Close() { m_Running = false; }
 
-        static Application& Get() { return *s_Instance; }
+        static Application& Get();
 
         template <typename T>
         static T* GetSystem()

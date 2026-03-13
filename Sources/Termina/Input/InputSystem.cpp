@@ -10,6 +10,8 @@ namespace Termina {
 
     InputSystem* InputSystem::s_Instance = nullptr;
 
+    InputSystem* InputSystem::Get() { return s_Instance; }
+
     InputSystem::InputSystem(GLFWwindow* window)
         : m_Window(window)
     {

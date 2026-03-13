@@ -1464,6 +1464,7 @@ namespace VMA_HPP_NAMESPACE {
       , Pool pool_ = {}
       , void* pUserData_ = {}
       , float priority_ = {}
+      , VULKAN_HPP_NAMESPACE::DeviceSize minAlignment_ = {}
     ) VULKAN_HPP_NOEXCEPT
       : flags { flags_ }
       , usage { usage_ }
@@ -1472,7 +1473,8 @@ namespace VMA_HPP_NAMESPACE {
       , memoryTypeBits { memoryTypeBits_ }
       , pool { pool_ }
       , pUserData { pUserData_ }
-      , priority { priority_ } {}
+      , priority { priority_ }
+      , minAlignment { minAlignment_ } {}
 
     VULKAN_HPP_CONSTEXPR AllocationCreateInfo(AllocationCreateInfo const &) VULKAN_HPP_NOEXCEPT = default;
     AllocationCreateInfo(VmaAllocationCreateInfo const & rhs) VULKAN_HPP_NOEXCEPT : AllocationCreateInfo(*reinterpret_cast<AllocationCreateInfo const *>(&rhs)) {}
@@ -1525,6 +1527,11 @@ namespace VMA_HPP_NAMESPACE {
       priority = priority_;
       return *this;
     }
+
+    VULKAN_HPP_CONSTEXPR_14 AllocationCreateInfo& setMinAlignment(VULKAN_HPP_NAMESPACE::DeviceSize minAlignment_) VULKAN_HPP_NOEXCEPT {
+      minAlignment = minAlignment_;
+      return *this;
+    }
 #endif
 
     operator VmaAllocationCreateInfo const &() const VULKAN_HPP_NOEXCEPT {
@@ -1551,7 +1558,8 @@ namespace VMA_HPP_NAMESPACE {
              , uint32_t const &
              , Pool const &
              , void* const &
-             , float const &>
+             , float const &
+             , VULKAN_HPP_NAMESPACE::DeviceSize const &>
     reflect() const VULKAN_HPP_NOEXCEPT {
       return std::tie(flags
                     , usage
@@ -1560,7 +1568,8 @@ namespace VMA_HPP_NAMESPACE {
                     , memoryTypeBits
                     , pool
                     , pUserData
-                    , priority);
+                    , priority
+                    , minAlignment);
     }
 #endif
 
@@ -1578,7 +1587,8 @@ namespace VMA_HPP_NAMESPACE {
         && memoryTypeBits == rhs.memoryTypeBits
         && pool == rhs.pool
         && pUserData == rhs.pUserData
-        && priority == rhs.priority;
+        && priority == rhs.priority
+        && minAlignment == rhs.minAlignment;
 #endif
   }
   bool operator!=(AllocationCreateInfo const & rhs) const VULKAN_HPP_NOEXCEPT {
@@ -1595,6 +1605,7 @@ namespace VMA_HPP_NAMESPACE {
     Pool pool = {};
     void* pUserData = {};
     float priority = {};
+    VULKAN_HPP_NAMESPACE::DeviceSize minAlignment = {};
   };
 
   // wrapper struct for struct VmaPoolCreateInfo, see https://gpuopen-librariesandsdks.github.io/VulkanMemoryAllocator/html/struct_vma_pool_create_info.html

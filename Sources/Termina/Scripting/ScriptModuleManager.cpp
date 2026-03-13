@@ -7,6 +7,12 @@
 #include <JSON/json.hpp>
 
 namespace Termina {
+    ScriptModuleManager& ScriptModuleManager::Get()
+    {
+        static ScriptModuleManager instance;
+        return instance;
+    }
+
     bool ScriptModuleManager::Load(const std::string& name, const std::string& path)
     {
         if (m_Modules.count(name)) {

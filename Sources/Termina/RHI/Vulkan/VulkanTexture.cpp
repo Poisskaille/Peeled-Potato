@@ -22,7 +22,8 @@ namespace Termina {
         imageInfo.setUsage(ConvertTextureUsageToVulkan(desc.Usage));
         imageInfo.setFlags(desc.IsCubeMap ? vk::ImageCreateFlagBits::eCubeCompatible : vk::ImageCreateFlags{});
     
-        vma::AllocationCreateInfo allocInfo = {};
+        vma::AllocationCreateInfo allocInfo;
+        memset(&allocInfo, 0, sizeof(allocInfo));
         allocInfo.usage = vma::MemoryUsage::eGpuOnly;
     
         vk::Result result = allocator.createImage(&imageInfo, &allocInfo, &m_Image, &m_Allocation, &m_AllocationInfo);

@@ -36,7 +36,6 @@ namespace Termina {
     }
 
     void Logger::Initialize(const std::string& logPath, ELogLevel logLevel) {
-        std::lock_guard<std::mutex> lock(g_LogMutex);
         g_LogLevel = logLevel;
         if (!logPath.empty()) {
             g_LogFile.open(logPath, std::ios::out | std::ios::trunc);
@@ -44,7 +43,6 @@ namespace Termina {
     }
 
     void Logger::Flush() {
-        std::lock_guard<std::mutex> lock(g_LogMutex);
         if (g_LogFile.is_open()) {
             g_LogFile.flush();
         }
@@ -53,8 +51,6 @@ namespace Termina {
     }
 
     void Logger::Output(ELogLevel level, const char* file, int line, const char* message) {
-        std::lock_guard<std::mutex> lock(g_LogMutex);
-
         const char* levelStr = LevelToString(level);
         const char* shortFile = GetFilename(file);
 

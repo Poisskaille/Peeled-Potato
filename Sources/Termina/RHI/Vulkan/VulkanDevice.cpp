@@ -110,6 +110,7 @@ namespace Termina {
     
         std::vector<const char*> instanceExtensions = {
             VK_EXT_DEBUG_UTILS_EXTENSION_NAME,
+            VK_KHR_SURFACE_EXTENSION_NAME
         };
         if (glfwVulkanSupported()) {
             uint32_t glfwExtensionCount = 0;
@@ -124,10 +125,8 @@ namespace Termina {
         instanceCreateInfo.setPApplicationInfo(&appInfo);
         instanceCreateInfo.setEnabledExtensionCount(static_cast<uint32_t>(instanceExtensions.size()));
         instanceCreateInfo.setPpEnabledExtensionNames(instanceExtensions.data());
-    #if _DEBUG
-        instanceCreateInfo.setEnabledLayerCount(static_cast<uint32_t>(instanceLayers.size()));
-        instanceCreateInfo.setPpEnabledLayerNames(instanceLayers.data());
-    #endif
+        //instanceCreateInfo.setEnabledLayerCount(static_cast<uint32_t>(instanceLayers.size()));
+        //instanceCreateInfo.setPpEnabledLayerNames(instanceLayers.data());
     
         m_Instance = vk::createInstance(instanceCreateInfo, nullptr);
     

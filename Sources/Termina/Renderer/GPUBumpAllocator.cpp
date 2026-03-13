@@ -12,7 +12,7 @@ namespace Termina {
         , m_Offset(0)
     {
         BufferDesc desc = BufferDesc().SetSize(totalSize)
-                                      .SetStride(0)
+                                      .SetStride(1)
                                       .SetUsage(BufferUsage::CONSTANT);
         m_Buffer = device->CreateBuffer(desc);
         m_Buffer->SetName("GPUBumpAllocator::m_Buffer");

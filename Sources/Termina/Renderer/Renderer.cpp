@@ -22,7 +22,7 @@ namespace Termina {
         m_CurrentWidth = window->GetWidth();
         m_CurrentHeight = window->GetHeight();
 
-        m_GPUAllocator = new GPUBumpAllocator(m_Device, 1024 * 1024 * 16); // 16 MB
+        m_GPUAllocator = new GPUBumpAllocator(m_Device, 1024 * 512); // 512 KB
         m_TemporaryContext = new TemporaryContext(m_Device);
         m_GPUUploader = new GPUUploader(m_Device, FRAMES_IN_FLIGHT);
         m_ResourceViewCache = new ResourceViewCache(m_Device);

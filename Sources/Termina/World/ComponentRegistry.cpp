@@ -4,6 +4,12 @@
 #include <algorithm>
 
 namespace Termina {
+    ComponentRegistry& ComponentRegistry::Get()
+    {
+        static ComponentRegistry instance;
+        return instance;
+    }
+
     bool ComponentRegistry::RegisterScripted(const std::string& name, std::function<Component*(Actor*)> factory)
     {
         if (!factory) return false;

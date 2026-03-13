@@ -11,11 +11,7 @@ namespace Termina {
     class IDGenerator
     {
     public:
-        static IDGenerator& Get()
-        {
-            static IDGenerator instance;
-            return instance;
-        }
+        static IDGenerator& Get();
 
         /// Generates a new unique ID.
         uint64 Generate();

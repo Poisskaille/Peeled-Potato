@@ -19,7 +19,8 @@ namespace Termina {
         if (Any(desc.Usage, BufferUsage::INDIRECT_COMMANDS)) bufferInfo.usage |= vk::BufferUsageFlagBits::eIndirectBuffer;
         if (Any(desc.Usage, BufferUsage::ACCELERATION_STRUCTURE)) bufferInfo.usage |= vk::BufferUsageFlagBits::eAccelerationStructureStorageKHR;
     
-        vma::AllocationCreateInfo allocInfo{};
+        vma::AllocationCreateInfo allocInfo;
+        memset(&allocInfo, 0, sizeof(allocInfo)); // Work around for Windows because for some reason minAlignment isn't in the C++ version of VMA
         allocInfo.usage = vma::MemoryUsage::eGpuOnly;
         if (Any(desc.Usage, BufferUsage::TRANSFER)) allocInfo.usage = vma::MemoryUsage::eCpuToGpu;
         if (Any(desc.Usage, BufferUsage::READBACK)) allocInfo.usage = vma::MemoryUsage::eCpuToGpu;

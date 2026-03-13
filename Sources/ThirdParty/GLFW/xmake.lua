@@ -2,16 +2,34 @@
 -- Translated from CMakeLists.txt
 
 target("GLFW")
-    set_kind("static")
+    if is_plat("windows") then
+        set_kind("shared")
+        add_rules("utils.symbols.export_all", {export_classes = true})
+    else
+        set_kind("static")
+    end
     set_languages("c99")
     add_deps("Vulkan")
+    set_group("Third Party")
+
+    if is_mode("debug") then
+        set_symbols("debug")
+        set_optimize("none")
+    elseif is_mode("releasedbg") then
+        set_symbols("debug")
+        set_optimize("fastest")
+    else
+        set_symbols("hidden")
+        set_optimize("fastest")
+        set_strip("all")
+    end
 
     -- Public include directory (glfw3.h, glfw3native.h live here)
     add_includedirs(".", {public = true})
 
     -- Compiler warnings
     if is_plat("windows") then
-        add_cflags("/W3")
+        add_cflags("/W3", "/TC")  -- /TC: force MSVC to treat all files as C (not C++)
     else
         add_cflags("-Wall")
     end

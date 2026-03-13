@@ -3,6 +3,7 @@
 #include <Termina/RHI/Device.hpp>
 #include <Termina/RHI/RenderContext.hpp>
 #include <Termina/World/World.hpp>
+#include <Termina/Core/Common.hpp>
 
 #include "GPUBumpAllocator.h"
 #include "GPUUploader.h"
@@ -28,7 +29,7 @@ namespace Termina {
         World* CurrentWorld;
         Camera CurrentCamera;
 
-        uint FrameIndex;
+        uint32 FrameIndex;
         int32 Width;
         int32 Height;
     };

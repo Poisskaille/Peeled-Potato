@@ -1,6 +1,12 @@
 #include "ID.hpp"
 
 namespace Termina {
+    IDGenerator& IDGenerator::Get()
+    {
+        static IDGenerator instance;
+        return instance;
+    }
+
     IDGenerator::IDGenerator()
         : m_Generator(std::random_device{}())
         , m_Distribution(1, std::numeric_limits<uint64>::max())

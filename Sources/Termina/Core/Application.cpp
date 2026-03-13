@@ -3,6 +3,8 @@
 namespace Termina {
     Application* Application::s_Instance = nullptr;
 
+    Application& Application::Get() { return *s_Instance; }
+
     Application::Application(const std::string& gameName)
     {
         s_Instance = this;

@@ -34,11 +34,7 @@ namespace Termina {
             std::function<Component*(Actor*)> Factory;
         };
 
-        static ComponentRegistry& Get()
-        {
-            static ComponentRegistry instance;
-            return instance;
-        }
+        static ComponentRegistry& Get();
 
         // Register a component type T with a name.
         // Returns true on success, false if the type or name is already registered.

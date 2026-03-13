@@ -7,7 +7,9 @@ namespace Termina {
     Window::Window(int width, int height, const char* title)
         : m_Width(width), m_Height(height)
     {
-        TN_ASSERT(glfwInit(), "Failed to initialize GLFW");
+        if (!glfwInit()) {
+            TN_FATAL("Failed to initialize GLFW!");
+        }
 
         glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
         glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);

@@ -22,6 +22,9 @@ namespace Termina {
         std::string line;
         std::stringstream sourceStream(source);
         while (std::getline(sourceStream, line)) {
+            if (!line.empty() && line.back() == '\r') {
+                line.pop_back();
+            }
             bool isCustomPragma = false;
         
             if (line.find("#pragma") != std::string::npos) {

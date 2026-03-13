@@ -94,7 +94,7 @@ namespace Termina {
         /// Shows the debug window for input system state.
         static void         ShowDebugWindow(bool* open = nullptr);
 
-        static InputSystem* Get() { return s_Instance; }
+        static InputSystem* Get();
 
     private:
         static void KeyCallbackGLFW(GLFWwindow* window, int key, int scancode, int action, int mods);

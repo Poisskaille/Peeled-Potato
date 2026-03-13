@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 namespace Termina {
     /// Represents a dynamically loaded library (DLL or shared object).
     class DLL
@@ -14,5 +16,6 @@ namespace Termina {
 
     private:
         void* m_Handle = nullptr;
+        std::string m_TempPath; // Windows: path to shadow copy so the original isn't locked
     };
 }

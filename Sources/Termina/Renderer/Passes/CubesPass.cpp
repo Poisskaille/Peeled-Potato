@@ -11,8 +11,8 @@ namespace Termina {
     CubesPass::CubesPass()
     {
         RendererDevice* device = Application::GetSystem<RendererSystem>()->GetDevice();
-        uint width = Application::Get().GetWindow()->GetPixelWidth();
-        uint height = Application::Get().GetWindow()->GetPixelHeight();
+        uint32 width = Application::Get().GetWindow()->GetPixelWidth();
+        uint32 height = Application::Get().GetWindow()->GetPixelHeight();
 
         TextureDesc desc = TextureDesc().SetSize(width, height)
                                         .SetFormat(TextureFormat::RGBA8_UNORM)
