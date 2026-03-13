@@ -76,7 +76,7 @@ void ViewportPanel::OnImGuiRender()
     ImGuizmo::SetDrawlist();
     ImGuizmo::SetRect(imagePos.x, imagePos.y, imageSize.x, imageSize.y);
 
-    if (m_Context.SelectedActor) {
+    if (m_Context.SelectedActor && !worldSystem->IsPlaying()) {
         Termina::Transform& transform = m_Context.SelectedActor->GetComponent<Termina::Transform>();
         glm::mat4 worldMatrix = transform.GetWorldMatrix();
 
@@ -107,7 +107,7 @@ void ViewportPanel::OnImGuiRender()
                 transform.SetLocalPosition(position);
                 transform.SetLocalRotation(rotation);
                 transform.SetLocalScale(scale);
-            }                        
+            }
         }
     }
 

@@ -22,7 +22,7 @@ namespace Termina {
 
         m_Camera.Projection = glm::perspective(glm::radians(m_FOV), 16.0f / 9.0f, m_Camera.Near, m_Camera.Far);
         m_Camera.Projection[1][1] *= -1;
-        m_Camera.View = glm::inverse(transform.GetWorldMatrix());
+        m_Camera.View = glm::lookAt(m_Camera.Position, m_Camera.Position + m_Camera.Direction, glm::vec3(0.0f, 1.0f, 0.0f));
         m_Camera.ViewProjection = m_Camera.Projection * m_Camera.View;
     }
 

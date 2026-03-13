@@ -26,7 +26,6 @@
 ## TODO
 
 ### Friday
-- Change camera to main camera on play
 - Asset system (ref counting/caching)
 - 3D audio + audio components
 - Textures

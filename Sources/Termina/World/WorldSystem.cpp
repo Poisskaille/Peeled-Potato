@@ -4,6 +4,8 @@
 
 #include "ComponentRegistry.hpp"
 #include "Components/Transform.hpp"
+#include "Core/Application.hpp"
+#include "Renderer/Renderer.hpp"
 
 namespace Termina {
 
@@ -139,6 +141,10 @@ namespace Termina {
     {
         if (m_CurrentWorld)
             m_CurrentWorld->OnPreRender(deltaTime);
+
+        RendererSystem* renderer = Application::GetSystem<RendererSystem>();
+        if (m_IsPlaying && renderer)
+            renderer->SetCurrentCamera(m_CurrentWorld->GetMainCamera());
     }
 
     void WorldSystem::Render(float deltaTime)
