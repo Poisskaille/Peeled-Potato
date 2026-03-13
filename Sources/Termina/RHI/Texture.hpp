@@ -15,6 +15,7 @@ namespace Termina {
         RGBA8_SRGB,
         BGRA8_UNORM,
         D32_FLOAT,
+        RGBA16_FLOAT,
 
         // Available everywhere except iOS
         BC7_UNORM,

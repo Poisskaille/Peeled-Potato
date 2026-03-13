@@ -37,6 +37,7 @@ namespace Termina {
             case TextureFormat::RGBA8_SRGB:    return MTLPixelFormatRGBA8Unorm_sRGB;
             case TextureFormat::BGRA8_UNORM:   return MTLPixelFormatBGRA8Unorm;
             case TextureFormat::D32_FLOAT:     return MTLPixelFormatDepth32Float;
+            case TextureFormat::RGBA16_FLOAT:  return MTLPixelFormatRGBA16Float;
             case TextureFormat::BC7_UNORM:     return MTLPixelFormatBC7_RGBAUnorm;
             case TextureFormat::BC7_SRGB:      return MTLPixelFormatBC7_RGBAUnorm_sRGB;
             case TextureFormat::ASTC6X6_UNORM: return MTLPixelFormatASTC_6x6_LDR;

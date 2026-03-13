@@ -44,6 +44,7 @@ namespace Termina {
         case TextureFormat::BC7_SRGB:      return vk::Format::eBc7SrgbBlock;
         case TextureFormat::BC7_UNORM:     return vk::Format::eBc7UnormBlock;
         case TextureFormat::D32_FLOAT:     return vk::Format::eD32Sfloat;
+        case TextureFormat::RGBA16_FLOAT:  return vk::Format::eR16G16B16A16Sfloat;
         default:                           return vk::Format::eUndefined;
         }
     }
