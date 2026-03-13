@@ -26,10 +26,9 @@
 ## TODO
 
 ### Friday
-- Asset system (ref counting/caching)
 - 3D audio + audio components
-- Textures
 - Rendering 3D models (static GLTF) + mesh component
+- Material asset
 - Simple HDR forward pass + tonemap via PassIO + debug renderer
 - Physics system (implement different types of colliders)
 
@@ -43,7 +42,7 @@
 - Runtime renders to backbuffer
 
 ## Sunday
-- Material asset
+- Prefabs
 - Asset compression and packing on export
 - Project system
 
