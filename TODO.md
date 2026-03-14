@@ -25,9 +25,6 @@
 
 ## TODO
 
-### Saturday
-- Physics system (implement different types of colliders)
-
 ## Sunday
 - Cook torrance BRDF
 - Directional lights
