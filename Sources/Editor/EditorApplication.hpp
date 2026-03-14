@@ -13,7 +13,7 @@
 class EditorApplication : public Termina::Application
 {
 public:
-    EditorApplication();
+    EditorApplication(const std::string& projectPath = "");
     ~EditorApplication();
 
     void OnUpdate(float dt) override;

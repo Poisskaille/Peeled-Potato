@@ -8,5 +8,6 @@ namespace Termina {
     public:
         static std::string OpenFile();
         static std::string SaveFile();
+        static std::string OpenDirectory();
     };
 }

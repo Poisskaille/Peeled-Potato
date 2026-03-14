@@ -3,7 +3,7 @@
 target("ImGui")
     if is_plat("windows") then
         set_kind("shared")
-        add_rules("utils.symbols.export_all", {export_classes = true})
+        add_rules("utils.symbols.export_all", { export_classes = true })
     else
         set_kind("static")
     end

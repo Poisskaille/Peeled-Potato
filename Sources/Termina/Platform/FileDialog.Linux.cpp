@@ -41,6 +41,12 @@ namespace Termina {
         return RunCommandCapture(cmd);
     }
 
+    std::string FileDialog::OpenDirectory()
+    {
+        const char* cmd = "zenity --file-selection --directory 2>/dev/null";
+        return RunCommandCapture(cmd);
+    }
+
     std::string FileDialog::SaveFile()
     {
         // Use zenity save dialog. --confirm-overwrite will prompt if the file exists.

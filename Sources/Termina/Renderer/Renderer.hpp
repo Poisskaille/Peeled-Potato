@@ -53,6 +53,8 @@ namespace Termina {
         void SetShouldImGuiClear(bool clear) { m_ShouldImGuiClear = clear; }
 
         void ShowDebugWindow(bool* open = nullptr);
+        void* GetImGuiContext();
+        void GetImGuiAllocator(void** allocFunc, void** freeFunc, void** userData);
     private:
         /// Bakes the render timeline by creating render passes.
         void BakeTimeline();

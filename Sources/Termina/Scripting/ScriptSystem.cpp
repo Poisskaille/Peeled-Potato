@@ -43,9 +43,11 @@ namespace Termina {
     void ScriptSystem::RebuildWatches()
     {
         m_Watches.clear();
-        for (auto& file : FileSystem::GetFilesRecursive("Sources/GameAssembly")) {
-            if (FileSystem::HasExtension(file, ".cpp") || FileSystem::HasExtension(file, ".hpp"))
-                m_Watches.push_back(FileSystem::WatchFile(file));
+        if (FileSystem::DirectoryExists("GameCode")) {
+            for (auto& file : FileSystem::GetFilesRecursive("GameCode")) {
+                if (FileSystem::HasExtension(file, ".cpp") || FileSystem::HasExtension(file, ".hpp"))
+                    m_Watches.push_back(FileSystem::WatchFile(file));
+            }
         }
     }
 

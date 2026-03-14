@@ -30,6 +30,31 @@ namespace Termina {
         return result;
     }
 
+    std::string FileDialog::OpenDirectory()
+    {
+        std::string result;
+
+        @autoreleasepool {
+            NSOpenPanel* panel = [NSOpenPanel openPanel];
+            panel.allowsMultipleSelection = NO;
+            panel.canChooseFiles = NO;
+            panel.canChooseDirectories = YES;
+            panel.canCreateDirectories = YES;
+
+            NSInteger response = [panel runModal];
+            if (response == NSModalResponseOK) {
+                NSURL* url = [panel URL];
+                NSString* path = [url path];
+                if (path) {
+                    const char* cstr = [path UTF8String];
+                    if (cstr) result = std::string(cstr);
+                }
+            }
+        }
+
+        return result;
+    }
+
     std::string FileDialog::SaveFile()
     {
         std::string result;

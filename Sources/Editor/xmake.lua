@@ -17,5 +17,5 @@ target("Editor")
     else
         set_symbols("hidden")
         set_optimize("fastest")
-        set_strip("all")
+        
     end

@@ -1,3 +1,5 @@
+#include <Termina/Asset/AssetSystem.hpp>
+
 #include "ModelAsset.hpp"
 
 #include <ImGui/imgui.h>

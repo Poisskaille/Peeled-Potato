@@ -4,6 +4,7 @@
 
 #include <windows.h>
 #include <commdlg.h>
+#include <shobjidl.h>
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -47,6 +48,42 @@ namespace Termina {
         }
 
         return {};
+    }
+
+    std::string FileDialog::OpenDirectory()
+    {
+        std::string result;
+
+        CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
+
+        IFileOpenDialog* dialog = nullptr;
+        if (SUCCEEDED(CoCreateInstance(CLSID_FileOpenDialog, nullptr, CLSCTX_ALL,
+                                       IID_IFileOpenDialog, reinterpret_cast<void**>(&dialog))))
+        {
+            DWORD options;
+            dialog->GetOptions(&options);
+            dialog->SetOptions(options | FOS_PICKFOLDERS | FOS_NOCHANGEDIR);
+
+            if (SUCCEEDED(dialog->Show(nullptr)))
+            {
+                IShellItem* item = nullptr;
+                if (SUCCEEDED(dialog->GetResult(&item)))
+                {
+                    PWSTR widePath = nullptr;
+                    if (SUCCEEDED(item->GetDisplayName(SIGDN_FILESYSPATH, &widePath)))
+                    {
+                        result = WideToUTF8(widePath);
+                        std::replace(result.begin(), result.end(), '\\', '/');
+                        CoTaskMemFree(widePath);
+                    }
+                    item->Release();
+                }
+            }
+            dialog->Release();
+        }
+
+        CoUninitialize();
+        return result;
     }
 
     std::string FileDialog::SaveFile()

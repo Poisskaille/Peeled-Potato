@@ -206,3 +206,11 @@ namespace Termina {
         ImGui::End();
     }
 }
+
+    void* Termina::RendererSystem::GetImGuiContext() {
+        return ImGui::GetCurrentContext();
+    }
+
+    void Termina::RendererSystem::GetImGuiAllocator(void** allocFunc, void** freeFunc, void** userData) {
+        ImGui::GetAllocatorFunctions((ImGuiMemAllocFunc*)allocFunc, (ImGuiMemFreeFunc*)freeFunc, userData);
+    }

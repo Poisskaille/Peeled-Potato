@@ -21,9 +21,9 @@ target("Termina")
         set_optimize("fastest")
     else
         add_defines("TRMN_RETAIL", {public = true})
-        set_symbols("hidden")
+        
         set_optimize("fastest")
-        set_strip("all")
+        
     end
 
     add_files("**.cpp")
@@ -53,9 +53,19 @@ target("Termina")
     end
 
     after_link(function (target)
+        local destdir = path.join("$(builddir)", "$(plat)", "$(arch)", "$(mode)")
+        
+        local bindir = ""
         if is_plat("windows") then
-            local destdir = path.join("$(builddir)", "$(plat)", "$(arch)", "$(mode)")
-            for _, f in ipairs(os.files("Binaries/Windows/*")) do
+            bindir = "Binaries/Windows/*"
+        elseif is_plat("macosx") then
+            bindir = "Binaries/Mac/*"
+        elseif is_plat("linux") then
+            bindir = "Binaries/Linux/*"
+        end
+        
+        if bindir ~= "" then
+            for _, f in ipairs(os.files(bindir)) do
                 local dest = path.join(destdir, path.filename(f))
                 if not os.isfile(dest) then
                     os.cp(f, dest)

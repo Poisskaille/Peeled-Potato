@@ -24,7 +24,9 @@
 #include "Termina/World/World.hpp"
 #include "Termina/World/WorldSystem.hpp"
 
-EditorApplication::EditorApplication()
+#include <filesystem>
+
+EditorApplication::EditorApplication(const std::string& projectPath)
     : Application("Editor")
 {
     m_SystemManager.AddSystem<Termina::InputSystem>(m_Window->GetHandle());
@@ -42,6 +44,12 @@ EditorApplication::EditorApplication()
     RegisterPanel<ContentViewerPanel>();
 
     Termina::ComponentRegistry::Get().Report();
+
+    if (!projectPath.empty())
+    {
+        m_Context.CurrentProject.LoadProject(projectPath);
+        std::filesystem::current_path(m_Context.CurrentProject.Path);
+    }
 }
 
 EditorApplication::~EditorApplication()

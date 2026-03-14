@@ -10,10 +10,12 @@ namespace Termina {
         std::string assetPath = path.substr(0, path.find_last_of('/'));
         // Then add the project name to get the asset path
         assetPath += "/Assets";
+        // Get the project path
+        std::string projectPath = path.substr(0, path.find_last_of('/'));
 
         nlohmann::json projectData;
         projectData["name"] = name;
-        projectData["path"] = path;
+        projectData["path"] = projectPath;
         projectData["lastOpenedScene"] = "";
         projectData["firstSceneToLoad"] = "";
         projectData["assetPath"] = assetPath;
