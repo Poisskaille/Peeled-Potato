@@ -224,6 +224,8 @@ void ContentViewerPanel::DrawModals()
             fs::rename(src, dst, ec);
             if (m_SelectedEntry == m_ModalTargetPath)
                 m_SelectedEntry = dst.string();
+            if (m_InspectedMaterial.IsValid() && m_InspectedMaterial.GetPath() == m_ModalTargetPath)
+                m_InspectedMaterial.Get()->SetPath(dst.string());
             ImGui::CloseCurrentPopup();
         }
         ImGui::SameLine();

@@ -324,7 +324,15 @@ namespace Termina {
                         gpuMat.ORMIndex      = resolveTextureIndex(m.ORMTexture);
                         gpuMat.EmissiveIndex = resolveTextureIndex(m.EmissiveTexture);
                         gpuMat.SamplerIndex  = samplerIndex;
-                        gpuMat._pad[0] = gpuMat._pad[1] = gpuMat._pad[2] = 0;
+                        gpuMat.Flags         = (m.AlphaTest        ? kMatFlagAlphaTest        : 0)
+                                             | (m.OverrideMetallic  ? kMatFlagOverrideMetallic  : 0)
+                                             | (m.OverrideRoughness ? kMatFlagOverrideRoughness : 0);
+                        gpuMat.MetallicFactor   = m.MetallicFactor;
+                        gpuMat.RoughnessFactor  = m.RoughnessFactor;
+                        gpuMat.ColorR           = m.Color.r;
+                        gpuMat.ColorG           = m.Color.g;
+                        gpuMat.ColorB           = m.Color.b;
+                        gpuMat.AlphaCutoff      = 0.5f;
                     }
                 }
 

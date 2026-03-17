@@ -37,6 +37,11 @@ namespace Termina {
 
     AssetSystem::~AssetSystem()
     {
+        // Clean is done in unregister componetents so it's not done before renderer deletes device
+    }
+
+    void AssetSystem::UnregisterComponents()
+    {
         ProcessPendingDeletions();
         for (auto& [id, record] : m_Records)
             record.Deleter(record.Asset);

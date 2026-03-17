@@ -29,6 +29,8 @@ namespace Termina {
         /// freed after the GPU has finished using them.
         void PostRender(float deltaTime) override;
 
+        void UnregisterComponents() override;
+
         UpdateFlags GetUpdateFlags() const override { return UpdateFlags::RenderUpdateDuringEditor; }
         std::string GetName()        const override { return "Asset System"; }
         int         GetPriority()    const override { return 100; }

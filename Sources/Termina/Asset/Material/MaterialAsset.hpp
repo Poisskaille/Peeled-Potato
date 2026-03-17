@@ -18,6 +18,9 @@ namespace Termina {
         Material&       GetMaterial()       { return m_Material; }
         const Material& GetMaterial() const { return m_Material; }
 
+        const std::string& GetPath() const { return m_Path; }
+        void SetPath(std::string path)     { m_Path = std::move(path); }
+
         void Save();
         void Inspect() override;
 

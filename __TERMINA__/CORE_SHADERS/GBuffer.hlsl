@@ -73,10 +73,11 @@ GBufferOut FSMain(VSOut i)
     if (mat.AlbedoIndex >= 0) {
         Texture2D<float4> tex = ResourceDescriptorHeap[mat.AlbedoIndex];
         albedo = tex.Sample(samp, i.UV);
-        if (albedo.a < 0.25f)
+        if ((mat.Flags & MAT_FLAG_ALPHA_TEST) && albedo.a < mat.AlphaCutoff)
             discard;
         albedo.rgb = pow(albedo.rgb, float3(2.2f, 2.2f, 2.2f));
     }
+    albedo.rgb *= mat.Color;
 
     // --- Normal map ---
     float3 N = normalize(i.WorldNormal);
@@ -94,6 +95,8 @@ GBufferOut FSMain(VSOut i)
         Texture2D<float4> ormTex = ResourceDescriptorHeap[mat.ORMIndex];
         orm = ormTex.Sample(samp, i.UV).rgb;
     }
+    if (mat.Flags & MAT_FLAG_OVERRIDE_ROUGHNESS) orm.g = mat.RoughnessFactor;
+    if (mat.Flags & MAT_FLAG_OVERRIDE_METALLIC)  orm.b = mat.MetallicFactor;
 
     // --- Emissive ---
     float3 emissive = float3(0.0f, 0.0f, 0.0f);
