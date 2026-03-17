@@ -114,15 +114,17 @@ namespace Termina {
             {
                 case ELogLevel::kDebug:   color = ImVec4(0.5f, 0.5f, 0.5f, 1.0f); break;
                 case ELogLevel::kTrace:   color = ImVec4(0.3f, 0.3f, 0.3f, 1.0f); break;
-                case ELogLevel::kInfo:    color = ImVec4(0.0f, 0.0f, 0.0f, 1.0f); break;
                 case ELogLevel::kWarning: color = ImVec4(0.7f, 0.4f, 0.0f, 1.0f); break;
                 case ELogLevel::kError:   color = ImVec4(0.8f, 0.0f, 0.0f, 1.0f); break;
                 case ELogLevel::kFatal:   color = ImVec4(0.6f, 0.0f, 0.0f, 1.0f); break;
                 default:                  color = ImVec4(0.0f, 0.0f, 0.0f, 1.0f); break;
             }
 
-            ImGui::TextColored(color, "[%s] %s:%d - %s",
-                LevelToString(entry.level), entry.file.c_str(), entry.line, entry.message.c_str());
+            if (entry.level == ELogLevel::kInfo)
+                ImGui::Text("%s:%d - %s", entry.file.c_str(), entry.line, entry.message.c_str());
+            else
+                ImGui::TextColored(color, "[%s] %s:%d - %s",
+                    LevelToString(entry.level), entry.file.c_str(), entry.line, entry.message.c_str());
         }
 
         if (g_LogScrollToBottom)
