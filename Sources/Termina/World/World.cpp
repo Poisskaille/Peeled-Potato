@@ -145,10 +145,11 @@ namespace Termina {
             idMap[oldId] = actor;
         }
 
-        // Wire hierarchy within the prefab
+        // Wire hierarchy within the prefab.
+        // Use AttachChildSilent — transforms are already in local space from Deserialize.
         for (const auto& entry : entries) {
             if (entry.oldParentId != 0 && idMap.count(entry.oldParentId)) {
-                idMap[entry.oldParentId]->AttachChild(entry.actor);
+                idMap[entry.oldParentId]->AttachChildSilent(entry.actor);
             }
         }
 
@@ -467,11 +468,13 @@ namespace Termina {
         }
 
         // Pass 2: Wire parent-child hierarchy.
+        // Use AttachChildSilent — transforms are already in local space from Deserialize,
+        // so we must NOT trigger OnAttach (which would corrupt them by re-converting to local).
         for (const auto& entry : entries) {
             if (entry.parentId == 0) continue;
             Actor* parent = GetActorById(entry.parentId);
             if (parent)
-                parent->AttachChild(entry.actor);
+                parent->AttachChildSilent(entry.actor);
             else
                 TN_WARN("Parent ID %llu not found for actor '%s'.",
                     static_cast<unsigned long long>(entry.parentId), entry.actor->GetName().c_str());

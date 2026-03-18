@@ -56,6 +56,8 @@ EditorApplication::EditorApplication(const std::string& projectPath)
 
 EditorApplication::~EditorApplication()
 {
+    GetSystem<Termina::AssetSystem>()->Clean(0);
+
     m_Context.ItemToInspect = nullptr;
     m_Context.SelectedActors.clear();
     m_Context.ContentViewer = nullptr;

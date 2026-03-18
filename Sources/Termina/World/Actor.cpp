@@ -149,6 +149,26 @@ namespace Termina {
         child->OnAttach(this);
     }
 
+    void Actor::AttachChildSilent(Actor* child)
+    {
+        if (!child || child == this) return;
+        if (IsDescendantOf(child)) return;
+
+        // Wire hierarchy directly without triggering OnAttach/OnDetach —
+        // used during deserialization where transforms are already in local space.
+        if (child->m_Parent)
+        {
+            Actor* oldParent = child->m_Parent;
+            auto it = std::find(oldParent->m_Children.begin(), oldParent->m_Children.end(), child);
+            if (it != oldParent->m_Children.end())
+                oldParent->m_Children.erase(it);
+            child->m_Parent = nullptr;
+        }
+
+        child->m_Parent = this;
+        m_Children.push_back(child);
+    }
+
     void Actor::DetachChild(Actor* child)
     {
         if (!child) return;

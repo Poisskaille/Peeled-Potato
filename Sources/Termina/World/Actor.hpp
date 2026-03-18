@@ -80,6 +80,7 @@ namespace Termina {
         void OnDetach(Actor* oldParent);
 
         void AttachChild(Actor* child);
+        void AttachChildSilent(Actor* child); // Wire hierarchy without firing OnAttach/OnDetach (used during load)
         void DetachChild(Actor* child);
         void DetachFromParent();
         bool IsDescendantOf(const Actor* actor) const;
