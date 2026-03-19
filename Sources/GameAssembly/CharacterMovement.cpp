@@ -7,11 +7,11 @@ void CharacterMovement::Update(float dt)
 
 void CharacterMovement::Start()
 {
-	rb = m_Owner->GetComponent(Termina::Rigidbody);
+	rb = m_Owner->GetComponent<Termina::Rigidbody>();
 }
 
 void CharacterMovement::Move()
 {
 	if (Input::IsKeyPressed(Termina::Key::Space))
-		rb.AddImpulse(glm::vec3(0,100,0);
+		rb.AddImpulse(glm::vec3(0,5,0));
 }

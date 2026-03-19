@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Termina/Scripting/API/ScriptingAPI.hpp>
-#include "Components/Rigidbody.hpp"
+#include <Termina/Physics/Components/Rigidbody.hpp>
 
 using namespace TerminaScript;
 
