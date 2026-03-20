@@ -1,0 +1,127 @@
+{
+    "actors": [
+        {
+            "active": true,
+            "components": [
+                {
+                    "active": true,
+                    "data": {
+                        "position": [
+                            0.0,
+                            0.6502844095230103,
+                            0.0
+                        ],
+                        "rotation": [
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "type": "Transform"
+                },
+                {
+                    "active": true,
+                    "data": {
+                        "half_height": 0.19099999964237213,
+                        "offset": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "radius": 0.14000000059604645,
+                        "rot_off": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "type": "Capsule Collider"
+                },
+                {
+                    "active": true,
+                    "data": {
+                        "allow_sleep": true,
+                        "angular_damping": 0.05000000074505806,
+                        "freeze_pos": [
+                            false,
+                            false,
+                            false
+                        ],
+                        "freeze_rot": [
+                            true,
+                            true,
+                            true
+                        ],
+                        "gravity_factor": 1.0,
+                        "is_sensor": false,
+                        "linear_damping": 0.05000000074505806,
+                        "mass": 1.0,
+                        "type": 0
+                    },
+                    "type": "Rigidbody"
+                },
+                {
+                    "active": true,
+                    "data": {},
+                    "type": "Character Movement"
+                },
+                {
+                    "active": true,
+                    "data": {
+                        "far": 100.0,
+                        "fov": 75.0,
+                        "near": 0.10999999940395355,
+                        "primary": true
+                    },
+                    "type": "Camera Component"
+                },
+                {
+                    "active": true,
+                    "data": {},
+                    "type": "Player Camera"
+                }
+            ],
+            "id": "10635747693305961454",
+            "name": "Player",
+            "parentId": null
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "active": true,
+                    "data": {
+                        "position": [
+                            0.0,
+                            -0.03288614749908447,
+                            0.0
+                        ],
+                        "rotation": [
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "scale": [
+                            0.09000003337860107,
+                            0.09000003337860107,
+                            0.09000003337860107
+                        ]
+                    },
+                    "type": "Transform"
+                }
+            ],
+            "id": "16621216741229580022",
+            "name": "Mesh",
+            "parentId": "10635747693305961454"
+        }
+    ],
+    "version": 1
+}

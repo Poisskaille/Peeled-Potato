@@ -2,6 +2,7 @@
 
 #include <Termina/Scripting/API/ScriptingAPI.hpp>
 #include <Termina/Physics/Components/Rigidbody.hpp>
+#include <Termina/Renderer/Components/CameraComponent.hpp>
 
 using namespace TerminaScript;
 
@@ -15,8 +16,9 @@ public:
 	void Update(float dt)override;
 	void Start()override;
 
-	void Move();
+	void Move(float dt);
 
 private:
 	Termina::Rigidbody rb;
+	Termina::CameraComponent cam;
 };
