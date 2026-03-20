@@ -7,6 +7,7 @@
 #include "RotateComponent.hpp"
 #include "CharacterMovement.h"
 #include "PlayerCamera.h"
+#include "LaserComponent.h"
 
 COMPONENT_MODULE_BEGIN()
     REGISTER_COMPONENT(FlyCamComponent, "Fly Cam Component")
@@ -15,4 +16,5 @@ COMPONENT_MODULE_BEGIN()
     REGISTER_COMPONENT(RotateComponent,"Rotate Component")
     REGISTER_COMPONENT(CharacterMovement, "Character Movement")
     REGISTER_COMPONENT(PlayerCamera,"Player Camera")
+    REGISTER_COMPONENT(LaserComponent,"Laser Component")
 COMPONENT_MODULE_END()
