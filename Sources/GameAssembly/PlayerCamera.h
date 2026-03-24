@@ -12,6 +12,9 @@ public:
 	PlayerCamera() = default;
 	PlayerCamera(Termina::Actor* owner) : TerminaScript::ScriptableComponent(owner) {}
 
+	void Serialize(nlohmann::json& out) const override;
+	void Deserialize(const nlohmann::json& in) override;
+
 	void Update(float dt)override;
 	void Start()override;
 

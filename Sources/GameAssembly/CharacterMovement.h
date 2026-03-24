@@ -17,6 +17,7 @@ public:
 	void Start()override;
 
 	void Move(float dt);
+	void FixSlide(float dt, glm::vec3);
 
 private:
 	Termina::Rigidbody rb;
