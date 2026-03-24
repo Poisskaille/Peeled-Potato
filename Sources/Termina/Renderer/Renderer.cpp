@@ -10,7 +10,6 @@
 #include "Renderer/Components/SpotLightComponent.hpp"
 #include "Renderer/Passes/CubesPass.hpp"
 #include "Renderer/Passes/GBufferPass.hpp"
-#include "Renderer/Passes/ShadowPass.hpp"
 #include "Renderer/Passes/DeferredPass.hpp"
 #include "Renderer/Passes/TonemapPass.hpp"
 #include "Renderer/Passes/ImGuiPass.hpp"
@@ -172,7 +171,6 @@ namespace Termina {
     {
         m_RenderPasses = {
             new GBufferPass(),
-            new ShadowPass(),
             new DeferredPass(),
             new SkyPass(),
             new TonemapPass(),
