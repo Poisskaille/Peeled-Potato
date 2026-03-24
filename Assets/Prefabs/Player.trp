@@ -1,0 +1,131 @@
+{
+    "actors": [
+        {
+            "active": true,
+            "components": [
+                {
+                    "active": true,
+                    "data": {
+                        "position": [
+                            0.0,
+                            0.9964473843574524,
+                            0.0
+                        ],
+                        "rotation": [
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "type": "Transform"
+                },
+                {
+                    "active": true,
+                    "data": {
+                        "half_height": 0.19099999964237213,
+                        "offset": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "radius": 0.14000000059604645,
+                        "rot_off": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "type": "Capsule Collider"
+                },
+                {
+                    "active": true,
+                    "data": {
+                        "allow_sleep": true,
+                        "angular_damping": 0.05000000074505806,
+                        "freeze_pos": [
+                            false,
+                            false,
+                            false
+                        ],
+                        "freeze_rot": [
+                            false,
+                            false,
+                            false
+                        ],
+                        "gravity_factor": 1.0,
+                        "is_sensor": false,
+                        "linear_damping": 0.05000000074505806,
+                        "mass": 1.0,
+                        "type": 0
+                    },
+                    "type": "Rigidbody"
+                },
+                {
+                    "active": true,
+                    "data": {},
+                    "type": "Character Movement"
+                },
+                {
+                    "active": true,
+                    "data": {
+                        "far": 100.0,
+                        "fov": 75.0,
+                        "near": 0.009999999776482582,
+                        "primary": true
+                    },
+                    "type": "Camera Component"
+                },
+                {
+                    "active": true,
+                    "data": {
+                        "Pitch": 0.0,
+                        "Sensitivity": 0.10000000149011612,
+                        "Yaw": 0.0
+                    },
+                    "type": "Player Camera"
+                }
+            ],
+            "id": "5204653552397013225",
+            "name": "Player",
+            "parentId": null
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "active": true,
+                    "data": {
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            1.0,
+                            -0.0,
+                            -0.0,
+                            -0.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "type": "Transform"
+                }
+            ],
+            "id": "6071047845949436867",
+            "name": "Mesh",
+            "parentId": "5204653552397013225"
+        }
+    ],
+    "version": 1
+}
