@@ -19,9 +19,9 @@ public:
 	void Start()override;
 
 private:
-	Termina::CameraComponent cam;
+	//Termina::CameraComponent cam;
 
-	float Sensitivity = 0.1f;
-	float Pitch = 0.0f;
-	float Yaw = 0.0f;
+	//float Sensitivity = 0.1f;
+	//float Pitch = 0.0f;
+	//float Yaw = 0.0f;
 };

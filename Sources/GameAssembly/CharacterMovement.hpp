@@ -21,5 +21,5 @@ public:
 
 private:
 	Termina::Rigidbody rb;
-	Termina::CameraComponent cam;
+	Termina::CameraComponent* cam;
 };

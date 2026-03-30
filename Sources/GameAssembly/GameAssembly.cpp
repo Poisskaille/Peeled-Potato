@@ -6,8 +6,8 @@
 #include "ParticleSystem.hpp"
 #include "PhysicsTestComponent.hpp"
 #include "RotateComponent.hpp"
-#include "CharacterMovement.h"
-#include "PlayerCamera.h"
+#include "CharacterMovement.hpp"
+#include "PlayerCamera.hpp"
 
 COMPONENT_MODULE_BEGIN()
     REGISTER_COMPONENT(FlyCamComponent, "Fly Cam Component")
