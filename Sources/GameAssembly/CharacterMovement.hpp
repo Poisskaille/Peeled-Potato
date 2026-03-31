@@ -16,10 +16,8 @@ public:
 	void Update(float dt)override;
 	void Start()override;
 
-	void Move(float dt);
-	void FixSlide(float dt, glm::vec3);
+	void Jump(float dt);
 
 private:
-	Termina::Rigidbody rb;
-	Termina::CameraComponent* cam;
+	Termina::Rigidbody* rb;
 };
