@@ -13,6 +13,8 @@ public:
 
 	void OnPlay() override; // Appelé au début du jeu pour initialiser la hauteur aléatoire
 	void Inspect() override;
+	void Serialize(nlohmann::json& out) const;
+	void Deserialize(const nlohmann::json& in);
 	void OnCollisionEnter(Termina::Actor* other) override;
 
 private:

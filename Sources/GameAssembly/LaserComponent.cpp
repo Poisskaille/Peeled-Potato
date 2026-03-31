@@ -45,6 +45,22 @@ void LaserComponent::Inspect()
 	ImGui::DragFloat("Distance Next", &m_distanceToNext, 0.5f, 5.0f, 50.0f);
 }
 
+void LaserComponent::Serialize(nlohmann::json& out) const
+{
+	out["Gap Size"] = m_gapSize;
+	out["Min Height"] = m_minHeight;
+	out["Max Height"] = m_maxHeight;
+	out["Distance Next"] = m_distanceToNext;
+}
+
+void LaserComponent::Deserialize(const nlohmann::json& in)
+{
+	if (in.contains("Gap Size")) m_gapSize = in["Gap Size"];
+	if (in.contains("Min Height")) m_minHeight = in["Min Height"];
+	if (in.contains("Max Height")) m_maxHeight = in["Max Height"];
+	if (in.contains("Distance Next")) m_distanceToNext = in["Distance Next"];
+}
+
 void LaserComponent::OnCollisionEnter(Termina::Actor* other)
 {
 	// Si le collider (qui représente faire le point en passant dans le trou) touche un joueur...

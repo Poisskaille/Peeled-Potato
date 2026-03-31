@@ -27,11 +27,16 @@
                 },
                 {
                     "active": true,
-                    "data": {},
+                    "data": {
+                        "Distance Next": 0.5,
+                        "Gap Size": 5.0,
+                        "Max Height": -2.0,
+                        "Min Height": 2.0
+                    },
                     "type": "Laser Component"
                 }
             ],
-            "id": "2442520644679485919",
+            "id": "14749912279391793292",
             "name": "Obstacles",
             "parentId": null
         },
@@ -53,8 +58,8 @@
                             0.0
                         ],
                         "scale": [
-                            1.0,
-                            1.0,
+                            5.0,
+                            5.0,
                             1.0
                         ]
                     },
@@ -68,9 +73,9 @@
                     "type": "Mesh Component"
                 }
             ],
-            "id": "5856680422210289443",
+            "id": "16154280528596586338",
             "name": "Mesh UP",
-            "parentId": "2442520644679485919"
+            "parentId": "14749912279391793292"
         },
         {
             "active": true,
@@ -90,8 +95,8 @@
                             0.0
                         ],
                         "scale": [
-                            1.0,
-                            1.0,
+                            5.0,
+                            5.0,
                             1.0
                         ]
                     },
@@ -105,9 +110,9 @@
                     "type": "Mesh Component"
                 }
             ],
-            "id": "4143335877828055251",
+            "id": "8359896694807614307",
             "name": "Mesh Down",
-            "parentId": "2442520644679485919"
+            "parentId": "14749912279391793292"
         }
     ],
     "version": 1
