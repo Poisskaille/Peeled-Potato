@@ -8,7 +8,7 @@
 #include "RotateComponent.hpp"
 #include "CharacterMovement.h"
 #include "PlayerCamera.h"
-#include "LaserComponent.h"
+#include "ObstacleComponent.h"
 #include "TrapdoorComponent.h"
 #include "ElectricalPanelBinaryComponent.h"
 #include "ElectricalPanelStaticComponent.h"
@@ -22,7 +22,7 @@ COMPONENT_MODULE_BEGIN()
     REGISTER_COMPONENT(RotateComponent,"Rotate Component")
     REGISTER_COMPONENT(CharacterMovement, "Character Movement")
     REGISTER_COMPONENT(PlayerCamera,"Player Camera")
-    REGISTER_COMPONENT(LaserComponent,"Laser Component")
+    REGISTER_COMPONENT(ObstacleComponent,"Obstacle Component")
     REGISTER_COMPONENT(TrapdoorComponent,"Trapdoor Component")
     REGISTER_COMPONENT(ElectricalPanelBinaryComponent,"Electrical Panel Binary Component")
     REGISTER_COMPONENT(ElectricalPanelStaticComponent,"Electrical Panel Static Component")

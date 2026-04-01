@@ -1,10 +1,10 @@
-#include "LaserComponent.h"
+#include "ObstacleComponent.h"
 
 #include <ImGui/imgui.h>
 #include <cstdlib> // Pour rand()
 
 
-void LaserComponent::OnPlay()
+void ObstacleComponent::OnPlay()
 {
 	// Générer une hauteur de trou aléatoire entre m_minHeight et m_maxHeight
 	float randomHeightOffset = m_minHeight + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (m_maxHeight - m_minHeight)));
@@ -36,7 +36,7 @@ void LaserComponent::OnPlay()
 	}
 }
 
-void LaserComponent::Inspect()
+void ObstacleComponent::Inspect()
 {
 	ImGui::Text("Flappy Obstacle Settings");
 	ImGui::DragFloat("Gap Size", &m_gapSize, 0.1f, 1.0f, 10.0f);
@@ -45,7 +45,7 @@ void LaserComponent::Inspect()
 	ImGui::DragFloat("Distance Next", &m_distanceToNext, 0.5f, 5.0f, 50.0f);
 }
 
-void LaserComponent::Serialize(nlohmann::json& out) const
+void ObstacleComponent::Serialize(nlohmann::json& out) const
 {
 	out["Gap Size"] = m_gapSize;
 	out["Min Height"] = m_minHeight;
@@ -53,7 +53,7 @@ void LaserComponent::Serialize(nlohmann::json& out) const
 	out["Distance Next"] = m_distanceToNext;
 }
 
-void LaserComponent::Deserialize(const nlohmann::json& in)
+void ObstacleComponent::Deserialize(const nlohmann::json& in)
 {
 	if (in.contains("Gap Size")) m_gapSize = in["Gap Size"];
 	if (in.contains("Min Height")) m_minHeight = in["Min Height"];
@@ -61,7 +61,7 @@ void LaserComponent::Deserialize(const nlohmann::json& in)
 	if (in.contains("Distance Next")) m_distanceToNext = in["Distance Next"];
 }
 
-void LaserComponent::OnCollisionEnter(Termina::Actor* other)
+void ObstacleComponent::OnCollisionEnter(Termina::Actor* other)
 {
 	// Si le collider (qui représente faire le point en passant dans le trou) touche un joueur...
 	if (!m_hasPassed && other->HasComponent<Termina::Transform>()) { // Remplace ce IF par une vérifiaction de Tag "Player" si possible

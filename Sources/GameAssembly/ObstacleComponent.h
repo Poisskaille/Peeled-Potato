@@ -4,12 +4,12 @@
 
 using namespace TerminaScript;
 
-class LaserComponent : public TerminaScript::ScriptableComponent
+class ObstacleComponent : public TerminaScript::ScriptableComponent
 {
 public:
 
-	LaserComponent() = default;
-	LaserComponent(Termina::Actor* owner) : TerminaScript::ScriptableComponent(owner) {}
+	ObstacleComponent() = default;
+	ObstacleComponent(Termina::Actor* owner) : TerminaScript::ScriptableComponent(owner) {}
 
 	void OnPlay() override; // Appelé au début du jeu pour initialiser la hauteur aléatoire
 	void Inspect() override;

@@ -8,7 +8,7 @@
                     "data": {
                         "position": [
                             0.36689746379852295,
-                            0.0,
+                            1.286231517791748,
                             0.0
                         ],
                         "rotation": [
@@ -28,15 +28,60 @@
                 {
                     "active": true,
                     "data": {
-                        "Distance Next": 0.5,
-                        "Gap Size": 5.0,
-                        "Max Height": -2.0,
-                        "Min Height": 2.0
+                        "half_extents": [
+                            5.0,
+                            10.0,
+                            0.800000011920929
+                        ],
+                        "offset": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rot_off": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
                     },
-                    "type": "Laser Component"
+                    "type": "Box Collider"
+                },
+                {
+                    "active": true,
+                    "data": {
+                        "allow_sleep": true,
+                        "angular_damping": 0.05000000074505806,
+                        "freeze_pos": [
+                            false,
+                            false,
+                            false
+                        ],
+                        "freeze_rot": [
+                            false,
+                            false,
+                            false
+                        ],
+                        "gravity_factor": 1.0,
+                        "is_sensor": true,
+                        "linear_damping": 0.05000000074505806,
+                        "mass": 1.0,
+                        "type": 1
+                    },
+                    "type": "Rigidbody"
+                },
+                {
+                    "active": true,
+                    "data": {
+                        "Distance Next": 15.0,
+                        "Gap Size": 3.0,
+                        "Max Height": 3.0,
+                        "Min Height": -2.0
+                    },
+                    "type": "Obstacle Component"
                 }
             ],
-            "id": "14749912279391793292",
+            "id": "17062040205117784428",
             "name": "Obstacles",
             "parentId": null
         },
@@ -73,9 +118,9 @@
                     "type": "Mesh Component"
                 }
             ],
-            "id": "16154280528596586338",
+            "id": "3643815075731117745",
             "name": "Mesh UP",
-            "parentId": "14749912279391793292"
+            "parentId": "17062040205117784428"
         },
         {
             "active": true,
@@ -110,9 +155,9 @@
                     "type": "Mesh Component"
                 }
             ],
-            "id": "8359896694807614307",
+            "id": "17015782929911632915",
             "name": "Mesh Down",
-            "parentId": "14749912279391793292"
+            "parentId": "17062040205117784428"
         }
     ],
     "version": 1
