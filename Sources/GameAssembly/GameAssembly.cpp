@@ -5,7 +5,7 @@
 #include "FlyCamComponent.hpp"
 #include "ParticleSystem.hpp"
 #include "PhysicsTestComponent.hpp"
-#include "RotateComponent.hpp"
+#include "ForwardComponent.hpp"
 #include "CharacterMovement.h"
 #include "PlayerCamera.h"
 #include "ObstacleComponent.h"
@@ -19,7 +19,7 @@ COMPONENT_MODULE_BEGIN()
     REGISTER_COMPONENT(FlyCamComponent, "Fly Cam Component")
     REGISTER_COMPONENT(ParticleSystemComponent, "Particle System")
     REGISTER_COMPONENT(PhysicsTestComponent, "Physics Test")
-    REGISTER_COMPONENT(RotateComponent,"Rotate Component")
+    REGISTER_COMPONENT(ForwardComponent,"Forward Component")
     REGISTER_COMPONENT(CharacterMovement, "Character Movement")
     REGISTER_COMPONENT(PlayerCamera,"Player Camera")
     REGISTER_COMPONENT(ObstacleComponent,"Obstacle Component")

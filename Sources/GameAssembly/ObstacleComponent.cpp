@@ -67,7 +67,9 @@ void ObstacleComponent::OnCollisionEnter(Termina::Actor* other)
 	if (!m_hasPassed && other->HasComponent<Termina::Transform>()) { // Remplace ce IF par une vérifiaction de Tag "Player" si possible
 		m_hasPassed = true;
 		TN_DEBUG("Point gagné ! Joueur a passé l'obstacle.");
-
+		TN_INFO("Point gagné ! Joueur a passé l'obstacle.");
+		TN_ERROR("Point gagné ! Joueur a passé l'obstacle.");
+	
 		// --- FAIRE APPARAITRE LE PROCHAIN OBSTACLE ---
 		
 		Termina::World* world = m_Owner->GetParentWorld();
