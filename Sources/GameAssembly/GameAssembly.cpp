@@ -13,6 +13,7 @@
 #include "ElectricalPanelBinaryComponent.h"
 #include "ElectricalPanelStaticComponent.h"
 #include "LethalComponent.h"
+#include "MenuComponent.h"
 
 
 COMPONENT_MODULE_BEGIN()
@@ -27,6 +28,7 @@ COMPONENT_MODULE_BEGIN()
     REGISTER_COMPONENT(ElectricalPanelBinaryComponent,"Electrical Panel Binary Component")
     REGISTER_COMPONENT(ElectricalPanelStaticComponent,"Electrical Panel Static Component")
     REGISTER_COMPONENT(LethalComponent,"Lethal Component")
+    REGISTER_COMPONENT(MenuComponent, "Menu Component")
 COMPONENT_MODULE_END()
 
 TERMINA_DLL_EXPORT void SetImGuiContext(void* ctx, void* allocFunc, void* freeFunc, void* userData)
