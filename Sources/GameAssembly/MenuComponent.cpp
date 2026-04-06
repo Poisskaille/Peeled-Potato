@@ -32,31 +32,61 @@ void MenuComponent::Update(float deltaTime)
 {
 	if (!m_isMenuOpen) return;
 
+	// --- 1. TAILLE DE LA FENETRE ---
+	// Modifie ces valeurs pour changer la taille globale de ton menu
+	float menuWidth = 600.0f;
+	float menuHeight = 400.0f;
+
 	ImVec2 center(ImGui::GetIO().DisplaySize.x * 0.5f, ImGui::GetIO().DisplaySize.y * 0.5f);
+	// On dit à ImGui : Positionne le centre de la fenêtre exactement au centre de l'écran (0.5, 0.5)
 	ImGui::SetNextWindowPos(center, ImGuiCond_Always, ImVec2(0.5f, 0.5f));
-	ImGui::SetNextWindowSize(ImVec2(300, 200)); 
+	// On applique nos nouvelles dimensions
+	ImGui::SetNextWindowSize(ImVec2(menuWidth, menuHeight)); 
 	
 	ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
 
 	ImGui::Begin("Menu Principal", nullptr, windowFlags);
-	ImGui::Text("Bienvenue dans le jeu !");
+	
+	// --- 2. ESPACEMENT & CENTRAGE ---
+	// On descend un peu le texte pour ne pas le coller au bord
+	ImGui::SetCursorPosY(50.0f);
+	
+	// Titre
+	const char* titleText = "Bienvenue dans le jeu !";
+	// (Optionnel) Calcul pour centrer le texte : 
+	float textWidth = ImGui::CalcTextSize(titleText).x;
+	ImGui::SetCursorPosX((menuWidth - textWidth) * 0.5f);
+	ImGui::Text(titleText);
+	
+	ImGui::Spacing();
 	ImGui::Separator();
+	ImGui::Spacing();
 
-	if (ImGui::Button("Lancer", ImVec2(280, 50))) {
+	// Variables pour la taille de nos boutons (plus grands aussi !)
+	float btnWidth = 400.0f;
+	float btnHeight = 60.0f;
+	// Calcul pour centrer les boutons horizontalement
+	float btnPosX = (menuWidth - btnWidth) * 0.5f;
+
+	// On descend la position Y pour espacer le premier bouton
+	ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 40.0f);
+
+	// Bouton "Lancer"
+	ImGui::SetCursorPosX(btnPosX); // Centre le bouton
+	if (ImGui::Button("Lancer", ImVec2(btnWidth, btnHeight))) {
 		TN_DEBUG("Menu: Bouton Lancer clique !");
 		m_isMenuOpen = false; // Ferme le menu
 
+		// --- CHANGEMENT DE CAMERA VERS LE JOUEUR ---
 		Termina::World* world = m_Owner->GetParentWorld();
 		if (world) {
 			Termina::Actor* menuCamActor = world->GetActorByName(m_menuCameraName);
 			Termina::Actor* playerActor = world->GetActorByName(m_playerCameraName);
 
-			// On désactive la caméra du menu
 			if (menuCamActor && menuCamActor->HasComponent<Termina::CameraComponent>()) {
 				menuCamActor->GetComponent<Termina::CameraComponent>().SetPrimary(false);
 			}
 
-			// On active la caméra du joueur
 			if (playerActor && playerActor->HasComponent<Termina::CameraComponent>()) {
 				playerActor->GetComponent<Termina::CameraComponent>().SetPrimary(true);
 				world->SetMainCamera(playerActor); 
@@ -67,11 +97,14 @@ void MenuComponent::Update(float deltaTime)
 		}
 	}
 
-	ImGui::Spacing();
+	// On redescend la position Y pour espacer le deuxième bouton
+	ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 20.0f);
 
-	if (ImGui::Button("Quitter", ImVec2(280, 50))) {
+	// Bouton "Quitter"
+	ImGui::SetCursorPosX(btnPosX); // Centre le bouton
+	if (ImGui::Button("Quitter", ImVec2(btnWidth, btnHeight))) {
 		TN_DEBUG("Menu: Fermeture du jeu demandee.");
-		Termina::Application::Get().Close();
+		Termina::Application::Get().Close(); // Quitte l'application
 	}
 
 	ImGui::End();
