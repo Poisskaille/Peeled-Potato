@@ -19,34 +19,36 @@ public:
 
     void Inspect() override;
 
-    // Runtime API
     void AddPrefab(const Prefab& prefab);
+    void AddPrefabY(const Prefab& prefab);
     void ClearPool();
+    void ClearPoolY();
 
 private:
     std::vector<Prefab> m_Pool;
+    // Separate pool for Y-type obstacles (user requested a separate prefab)
+    std::vector<Prefab> m_PoolY;
 
-    // Spawning configuration
-    float m_SpawnInterval = 1.0f; // seconds between spawns
+    float m_SpawnInterval = 1.0f;
     float m_Timer = 0.0f;
     int m_MaxSpawned = 50;
 
-    // Simple positional randomization around the generator's transform
     float m_SpawnOffsetMinX = 8.0f;
     float m_SpawnOffsetMaxX = 12.0f;
     float m_SpawnOffsetMinY = -1.0f;
     float m_SpawnOffsetMaxY = 3.0f;
 
-    // Track spawned actors count (optional, cleaned when actor is destroyed externally)
     int m_CurrentSpawned = 0;
 
-    // Active spawned actors (used to cleanup/destroy when they pass the player)
     std::vector<Termina::Actor*> m_SpawnedActors;
+    std::vector<Termina::Actor*> m_SpawnedActorsY;
 
-    // When spawned obstacles pass this X (world) position they will be destroyed
     float m_DestroyX = -5.0f;
 
-    // Optional Z variance for 3D placement (player is at Z=0)
     float m_SpawnOffsetMinZ = -1.0f;
     float m_SpawnOffsetMaxZ = 1.0f;
+    // For Y spawns: distance on X where they should appear (relative to world origin)
+    float m_SpawnDistanceXForY = 10.0f;
+    // Lateral offset magnitude for right/left spawn (Z axis)
+    float m_SpawnSideOffsetZ = 4.0f;
 };

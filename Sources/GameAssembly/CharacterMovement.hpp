@@ -6,6 +6,8 @@
 
 using namespace TerminaScript;
 
+enum class PlayerShieldState { None, Left, Right };
+
 class CharacterMovement : public TerminaScript::ScriptableComponent
 {
 public:
@@ -17,7 +19,13 @@ public:
 	void Start()override;
 
 	void Jump(float dt);
+	void Shield();
+
+	PlayerShieldState GetShieldState();
 
 private:
 	Termina::Rigidbody* rb;
+	PlayerShieldState shieldState = PlayerShieldState::None;
+
+	float delay = 0.f;
 };

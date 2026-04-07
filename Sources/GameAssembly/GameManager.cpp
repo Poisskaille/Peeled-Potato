@@ -16,6 +16,8 @@ void GameManager::NewGame()
 	_score = new Score();
 }
 
+float GameManager::GetPlayerScore(){ return _score->GetScore(); }
+
 GameManager* GameManager::Instance()
 {
 	if (instance == nullptr)

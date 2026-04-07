@@ -16,10 +16,17 @@ public:
 	void Update(float dt)override;
 
 	void NewGame();
+	float GetPlayerScore();
 
-	GameManager* Instance();
+	static GameManager* Instance();
+
+	float GetXObstacleSpeed() const { return XobstacleSpeed; }
+	float GetYObstacleSpeed() const { return YObstacleSpeed; }
 
 private:
 	Score* _score;
-	GameManager* instance;
+	static GameManager* instance;
+
+	float XobstacleSpeed = 5.f;
+	float YObstacleSpeed = 10.f;
 };
