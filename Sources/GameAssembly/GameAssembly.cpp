@@ -8,6 +8,9 @@
 #include "RotateComponent.hpp"
 #include "CharacterMovement.hpp"
 #include "PlayerCamera.hpp"
+#include "GameManager.hpp"
+#include "ObstacleComponent.hpp"
+#include "ProceduralGenerator.hpp"
 
 COMPONENT_MODULE_BEGIN()
     REGISTER_COMPONENT(FlyCamComponent, "Fly Cam Component")
@@ -16,6 +19,9 @@ COMPONENT_MODULE_BEGIN()
     REGISTER_COMPONENT(RotateComponent,"Rotate Component")
     REGISTER_COMPONENT(CharacterMovement, "Character Movement")
     REGISTER_COMPONENT(PlayerCamera,"Player Camera")
+    REGISTER_COMPONENT(GameManager, "GameManager")
+    REGISTER_COMPONENT(ObstacleComponent, "Obstacle Component")
+	REGISTER_COMPONENT(ProceduralGenerator, "Procedural Generator")
 COMPONENT_MODULE_END()
 
 TERMINA_DLL_EXPORT void SetImGuiContext(void* ctx, void* allocFunc, void* freeFunc, void* userData)

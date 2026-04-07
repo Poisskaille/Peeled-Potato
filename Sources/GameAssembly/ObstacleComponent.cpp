@@ -1,20 +1,14 @@
-#include "RotateComponent.hpp"
-
-#include <ImGui/imgui.h>
+#include "ObstacleComponent.hpp"
 
 void ObstacleComponent::Update(float dt)
 {
-	glm::vec3 pos = m_Transform->GetRotation();
-	pos.x += _speed;
-	m_Transform->SetRotation(pos);
+	glm::vec3 pos = m_Transform->GetPosition();
+	pos.x -= _speed * dt;
+	m_Transform->SetPosition(pos);
 }
 
-void ObstacleComponent::Serialize(nlohmann::json& out) const
+void ObstacleComponent::OnCollisionEnter(Termina::Actor* other)
 {
-	out["Rotate Speed"] = m_rotateSpeed;
-}
-
-void ObstacleComponent::Deserialize(const nlohmann::json& in)
-{
-	if (in.contains("Rotate Speed")) m_rotateSpeed = in["Rotate Speed"];
+	TN_INFO("Collide");
+	Destroy(other);
 }

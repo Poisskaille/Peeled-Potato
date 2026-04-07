@@ -1,0 +1,53 @@
+{
+    "actors": [
+        {
+            "active": true,
+            "components": [
+                {
+                    "active": true,
+                    "data": {
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "type": "Transform"
+                },
+                {
+                    "active": true,
+                    "data": {},
+                    "type": "GameManager"
+                },
+                {
+                    "active": true,
+                    "data": {
+                        "Max Spawned": 50,
+                        "Pool": [
+                            "Assets\\Prefabs\\Obstacle.trp",
+                            "Assets\\Prefabs\\Obstacle.trp",
+                            "Assets\\Prefabs\\Obstacle.trp"
+                        ],
+                        "Spawn Interval": 1.0
+                    },
+                    "type": "Procedural Generator"
+                }
+            ],
+            "id": "7106026050305737530",
+            "name": "Managers",
+            "parentId": null
+        }
+    ],
+    "version": 1
+}

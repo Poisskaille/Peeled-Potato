@@ -1,6 +1,9 @@
 #pragma once
 
 #include <Termina/Scripting/API/ScriptingAPI.hpp>
+#include <Termina/Physics/Components/Rigidbody.hpp>
+#include <Termina/Core/Logger.hpp>
+#include <Termina/Renderer/Components/CameraComponent.hpp>
 
 using namespace TerminaScript;
 
@@ -12,9 +15,9 @@ public:
 	ObstacleComponent(Termina::Actor* owner) : TerminaScript::ScriptableComponent(owner) {}
 
 	void Update(float dt)override;
-	void Serialize(nlohmann::json& out) const override;
-	void Deserialize(const nlohmann::json& in) override;
+	void OnCollisionEnter(Termina::Actor* other)override;
 
-	float _speed = 0.5f;
 
+private:
+	float _speed = 5.f;
 };

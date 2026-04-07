@@ -13,13 +13,13 @@ void GameManager::Update(float dt)
 
 void GameManager::NewGame()
 {
-	_score = new Score*;
+	_score = new Score();
 }
 
 GameManager* GameManager::Instance()
 {
 	if (instance == nullptr)
-		instance = new GameManager*;
+		instance = new GameManager();
 
 	return instance;
 }
