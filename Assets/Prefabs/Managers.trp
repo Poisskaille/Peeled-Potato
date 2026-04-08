@@ -33,13 +33,16 @@
                 {
                     "active": true,
                     "data": {
-                        "Max Spawned": 50,
-                        "Pool": [
-                            "Assets\\Prefabs\\Obstacle.trp",
-                            "Assets\\Prefabs\\Obstacle.trp",
+                        "prefabsX": [
                             "Assets\\Prefabs\\Obstacle.trp"
                         ],
-                        "Spawn Interval": 1.0
+                        "prefabsZ": [
+                            "Assets\\Prefabs\\Obstacle.trp"
+                        ],
+                        "spawnDistance": 25.0,
+                        "spawnIntervalX": 1.0,
+                        "spawnIntervalZ": 1.2000000476837158,
+                        "spread": 20.0
                     },
                     "type": "Procedural Generator"
                 }

@@ -14,6 +14,7 @@ public:
 
 	void Start()override;
 	void Update(float dt)override;
+	void UpgradeDifficulty(float dt);
 
 	void NewGame();
 	float GetPlayerScore();
@@ -27,6 +28,7 @@ private:
 	Score* _score;
 	static GameManager* instance;
 
+	float delay = 5.f;
 	float XobstacleSpeed = 5.f;
 	float YObstacleSpeed = 10.f;
 };

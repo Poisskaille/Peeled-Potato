@@ -1,216 +1,171 @@
 #include "ProceduralGenerator.hpp"
-
-#include <ImGui/imgui.h>
-#include <random>
 #include "ObstacleComponent.hpp"
+#include <random>
+#include <Termina/Core/Logger.hpp>
+#include <Termina/Renderer/UIUtils.hpp>
 
-static std::mt19937& GetRng()
+static std::mt19937& rng()
 {
     static std::random_device rd;
-    static std::mt19937 rng(rd());
-    return rng;
-}
-
-void ProceduralGenerator::Update(float dt)
-{
-    for (size_t i = 0; i < m_SpawnedActors.size(); ++i) {
-        Termina::Actor* a = m_SpawnedActors[i];
-        if (!a) {
-            m_SpawnedActors.erase(m_SpawnedActors.begin() + i);
-            --i;
-            continue;
-        }
-        float ax = a->GetComponent<Termina::Transform>().GetPosition().x;
-        if (ax <= m_DestroyX) {
-            Destroy(a);
-            m_SpawnedActors.erase(m_SpawnedActors.begin() + i);
-            --i;
-            if (m_CurrentSpawned > 0) --m_CurrentSpawned;
-            continue;
-        }
-    }
-
-    for (size_t i = 0; i < m_SpawnedActorsY.size(); ++i) {
-        Termina::Actor* a = m_SpawnedActorsY[i];
-        if (!a) {
-            m_SpawnedActorsY.erase(m_SpawnedActorsY.begin() + i);
-            --i;
-            continue;
-        }
-        float ay = a->GetComponent<Termina::Transform>().GetPosition().y;
-        if (ay <= -10.0f) {
-            Destroy(a);
-            m_SpawnedActorsY.erase(m_SpawnedActorsY.begin() + i);
-            --i;
-            if (m_CurrentSpawnedY > 0) --m_CurrentSpawnedY;
-            continue;
-        }
-    }
-
-    if (!m_Pool.empty()) {
-        m_Timer += dt;
-        if (m_Timer >= m_SpawnInterval) {
-            m_Timer = 0.0f;
-            if (m_CurrentSpawned < m_MaxSpawned) {
-                std::uniform_int_distribution<size_t> idxDist(0, m_Pool.size() - 1);
-                size_t idx = idxDist(GetRng());
-                const Prefab& prefab = m_Pool[idx];
-                if (prefab.IsValid()) {
-                    glm::vec3 pos = m_Transform->GetPosition();
-                    std::uniform_real_distribution<float> xDist(m_SpawnOffsetMinX, m_SpawnOffsetMaxX);
-                    std::uniform_real_distribution<float> yDist(m_SpawnOffsetMinY, m_SpawnOffsetMaxY);
-                    std::uniform_real_distribution<float> zDist(m_SpawnOffsetMinZ, m_SpawnOffsetMaxZ);
-                    pos.x += xDist(GetRng());
-                    pos.y += yDist(GetRng());
-                    pos.z += zDist(GetRng());
-
-                    Termina::Actor* actor = Instantiate(prefab);
-                    if (actor) {
-                        actor->GetComponent<Termina::Transform>().SetPosition(pos);
-                        if (actor->HasComponent<ObstacleComponent>())
-                            actor->GetComponent<ObstacleComponent>().SetType(ObstacleType::X);
-                        m_SpawnedActors.push_back(actor);
-                        ++m_CurrentSpawned;
-                    }
-                }
-            }
-        }
-    }
-
-    if (!m_PoolY.empty()) {
-        m_TimerY += dt;
-        if (m_TimerY >= m_SpawnIntervalY) {
-            m_TimerY = 0.0f;
-            if (m_CurrentSpawnedY < m_MaxSpawnedY) {
-                std::uniform_int_distribution<size_t> idxDistY(0, m_PoolY.size() - 1);
-                size_t idxY = idxDistY(GetRng());
-                const Prefab& prefabY = m_PoolY[idxY];
-                if (prefabY.IsValid()) {
-                    glm::vec3 pos(0.0f);
-                    std::uniform_int_distribution<int> sideDist(0, 1);
-                    int side = sideDist(GetRng()) == 0 ? -1 : 1;
-                    pos.x = (side > 0) ? m_SpawnDistanceXForY : -m_SpawnDistanceXForY;
-                    std::uniform_real_distribution<float> yDist(m_SpawnOffsetMinY, m_SpawnOffsetMaxY);
-                    pos.y = yDist(GetRng());
-                    pos.z = side * m_SpawnSideOffsetZ;
-
-                    Termina::Actor* actorY = Instantiate(prefabY);
-                    if (actorY) {
-                        actorY->GetComponent<Termina::Transform>().SetPosition(pos);
-                        if (actorY->HasComponent<ObstacleComponent>())
-                            actorY->GetComponent<ObstacleComponent>().SetType(ObstacleType::Y);
-                        m_SpawnedActorsY.push_back(actorY);
-                        ++m_CurrentSpawnedY;
-                    }
-                }
-            }
-        }
-    }
+    static std::mt19937 gen(rd());
+    return gen;
 }
 
 void ProceduralGenerator::Serialize(nlohmann::json& out) const
 {
-    out["Spawn Interval"] = m_SpawnInterval;
-    out["Max Spawned"] = m_MaxSpawned;
-    out["Destroy X"] = m_DestroyX;
-    out["SpawnOffsetMinZ"] = m_SpawnOffsetMinZ;
-    out["SpawnOffsetMaxZ"] = m_SpawnOffsetMaxZ;
-    out["Spawn Interval Y"] = m_SpawnIntervalY;
-    out["Max Spawned Y"] = m_MaxSpawnedY;
-    out["Spawn Distance X For Y"] = m_SpawnDistanceXForY;
-    out["Spawn Side Offset Z"] = m_SpawnSideOffsetZ;
-    out["Pool"] = nlohmann::json::array();
-    for (const auto& p : m_Pool) out["Pool"].push_back(p.Path);
-    out["PoolY"] = nlohmann::json::array();
-    for (const auto& p : m_PoolY) out["PoolY"].push_back(p.Path);
+    out["spawnIntervalX"] = SpawnIntervalX;
+    out["spawnIntervalZ"] = SpawnIntervalZ;
+    out["spawnDistance"] = SpawnDistance;
+    out["spread"] = Spread;
+
+    nlohmann::json xlist = nlohmann::json::array();
+    for (const auto& p : PrefabsX)
+        xlist.push_back(p.Path);
+    out["prefabsX"] = std::move(xlist);
+
+    nlohmann::json zlist = nlohmann::json::array();
+    for (const auto& p : PrefabsZ)
+        zlist.push_back(p.Path);
+    out["prefabsZ"] = std::move(zlist);
 }
 
 void ProceduralGenerator::Deserialize(const nlohmann::json& in)
 {
-    if (in.contains("Spawn Interval")) m_SpawnInterval = in["Spawn Interval"];
-    if (in.contains("Max Spawned")) m_MaxSpawned = in["Max Spawned"];
-    if (in.contains("Destroy X")) m_DestroyX = in["Destroy X"];
-    if (in.contains("SpawnOffsetMinZ")) m_SpawnOffsetMinZ = in["SpawnOffsetMinZ"];
-    if (in.contains("SpawnOffsetMaxZ")) m_SpawnOffsetMaxZ = in["SpawnOffsetMaxZ"];
-    if (in.contains("Spawn Interval Y")) m_SpawnIntervalY = in["Spawn Interval Y"];
-    if (in.contains("Max Spawned Y")) m_MaxSpawnedY = in["Max Spawned Y"];
-    if (in.contains("Spawn Distance X For Y")) m_SpawnDistanceXForY = in["Spawn Distance X For Y"];
-    if (in.contains("Spawn Side Offset Z")) m_SpawnSideOffsetZ = in["Spawn Side Offset Z"];
-    if (in.contains("Pool") && in["Pool"].is_array()) {
-        m_Pool.clear();
-        for (auto& v : in["Pool"]) {
-            if (v.is_string()) m_Pool.emplace_back(v.get<std::string>());
+    SpawnIntervalX = in.value("spawnIntervalX", SpawnIntervalX);
+    SpawnIntervalZ = in.value("spawnIntervalZ", SpawnIntervalZ);
+    SpawnDistance = in.value("spawnDistance", SpawnDistance);
+    Spread = in.value("spread", Spread);
+
+    PrefabsX.clear();
+    if (in.contains("prefabsX") && in["prefabsX"].is_array()) {
+        for (const auto& v : in["prefabsX"]) {
+            std::string path = v.get<std::string>();
+            PrefabsX.emplace_back(Prefab(path));
         }
     }
-    if (in.contains("PoolY") && in["PoolY"].is_array()) {
-        m_PoolY.clear();
-        for (auto& v : in["PoolY"]) {
-            if (v.is_string()) m_PoolY.emplace_back(v.get<std::string>());
+
+    PrefabsZ.clear();
+    if (in.contains("prefabsZ") && in["prefabsZ"].is_array()) {
+        for (const auto& v : in["prefabsZ"]) {
+            std::string path = v.get<std::string>();
+            PrefabsZ.emplace_back(Prefab(path));
         }
     }
+}
+
+void ProceduralGenerator::Awake()
+{
+    // nothing
+}
+
+void ProceduralGenerator::Start()
+{
+}
+
+void ProceduralGenerator::Update(float dt)
+{
+	SpawnObstacleX(dt);
+	SpawnObstacleZ(dt);
 }
 
 void ProceduralGenerator::Inspect()
 {
-    ImGui::DragFloat("Spawn Interval", &m_SpawnInterval, 0.01f);
-    ImGui::DragInt("Max Spawned", &m_MaxSpawned, 1);
-    ImGui::DragFloat("Destroy X", &m_DestroyX, 0.1f);
-    ImGui::DragFloat("Spawn Min Z", &m_SpawnOffsetMinZ, 0.1f);
-    ImGui::DragFloat("Spawn Max Z", &m_SpawnOffsetMaxZ, 0.1f);
-
-    ImGui::Text("Pool:");
-    for (size_t i = 0; i < m_Pool.size(); ++i) {
-        char buf[64];
-        sprintf(buf, "Prefab %zu", i);
-        if (m_Pool[i].Inspect(buf)) {
-        }
+    ImGui::Text("Prefabs X (%zu):", PrefabsX.size());
+    for (size_t i = 0; i < PrefabsX.size(); ++i) {
+        ImGui::PushID((int)i);
+        bool changed = Termina::UIUtils::PrefabPicker(PrefabsX[i].Path);
         ImGui::SameLine();
-        if (ImGui::Button((std::string("Remove##") + std::to_string(i)).c_str())) {
-            m_Pool.erase(m_Pool.begin() + i);
-            --i;
-            continue;
+        if (ImGui::SmallButton("Remove")) {
+            PrefabsX.erase(PrefabsX.begin() + i);
+            ImGui::PopID();
+            break;
         }
+        ImGui::PopID();
     }
-
-    if (ImGui::Button("Add Empty Prefab")) {
-        m_Pool.emplace_back();
+    if (ImGui::SmallButton("Add Prefab to X")) {
+        PrefabsX.emplace_back(Prefab());
     }
 
     ImGui::Separator();
-    ImGui::Text("Y-type Obstacles:");
-    ImGui::DragFloat("Spawn Interval Y", &m_SpawnIntervalY, 0.01f);
-    ImGui::DragInt("Max Spawned Y", &m_MaxSpawnedY, 1);
-    ImGui::DragFloat("Spawn Distance X For Y", &m_SpawnDistanceXForY, 0.1f);
-    ImGui::DragFloat("Spawn Side Offset Z", &m_SpawnSideOffsetZ, 0.1f);
 
-    ImGui::Text("Pool Y:");
-    for (size_t i = 0; i < m_PoolY.size(); ++i) {
-        char buf[64];
-        sprintf(buf, "PrefabY %zu", i);
-        if (m_PoolY[i].Inspect(buf)) {}
+    ImGui::Text("Prefabs Z (%zu):", PrefabsZ.size());
+    for (size_t i = 0; i < PrefabsZ.size(); ++i) {
+        ImGui::PushID((int)i + 1000);
+        bool changed = Termina::UIUtils::PrefabPicker(PrefabsZ[i].Path);
         ImGui::SameLine();
-        if (ImGui::Button((std::string("RemoveY##") + std::to_string(i)).c_str())) {
-            m_PoolY.erase(m_PoolY.begin() + i);
-            --i;
-            continue;
+        if (ImGui::SmallButton("Remove")) {
+            PrefabsZ.erase(PrefabsZ.begin() + i);
+            ImGui::PopID();
+            break;
+        }
+        ImGui::PopID();
+    }
+    if (ImGui::SmallButton("Add Prefab to Z")) {
+        PrefabsZ.emplace_back(Prefab());
+    }
+}
+
+void ProceduralGenerator::SpawnObstacleX(float dt)
+{
+    static float accumX = 0.f;
+    static float accumZ = 0.f;
+
+    accumX += dt;
+    accumZ += dt;
+
+    glm::vec3 playerPos(0.0f);
+
+    if (accumX >= SpawnIntervalX) {
+        accumX = 0.f;
+        if (!PrefabsX.empty()) {
+            std::uniform_int_distribution<size_t> pick(0, PrefabsX.size() - 1);
+            size_t idx = pick(rng());
+            Termina::Actor* a = Instantiate(PrefabsX[idx]);
+            if (a) {
+                if (a->HasComponent<Termina::Transform>()) {
+                    std::uniform_real_distribution<float> ydist(-3.0f, 3.0f);
+                    float y = ydist(rng());
+                    a->GetComponent<Termina::Transform>().SetPosition(glm::vec3(playerPos.x + SpawnDistance, y, 0.0f));
+                    a->GetComponent<Termina::Transform>().SetEulerAngles(glm::vec3(0.0f, 0.0f, 0.0f));
+                }
+                if (a->HasComponent<ObstacleComponent>()) {
+                    a->GetComponent<ObstacleComponent>().SetType(ObstacleType::X);
+                }
+            }
         }
     }
+}
 
-    if (ImGui::Button("Add Empty Prefab Y")) {
-        m_PoolY.emplace_back();
+void ProceduralGenerator::SpawnObstacleZ(float dt)
+{
+    static float accumX = 0.f;
+    static float accumZ = 0.f;
+
+    accumX += dt;
+    accumZ += dt;
+
+    glm::vec3 playerPos(0.0f);
+
+    if (accumZ >= SpawnIntervalZ) {
+        accumZ = 0.f;
+        if (!PrefabsZ.empty()) {
+            std::uniform_int_distribution<size_t> pick(0, PrefabsZ.size() - 1);
+            size_t idx = pick(rng());
+            Termina::Actor* a = Instantiate(PrefabsZ[idx]);
+            if (a) {
+                std::uniform_int_distribution<int> sideDist(0, 1);
+                bool isRight = (sideDist(rng()) == 0);
+                float sideX = isRight ? SpawnDistance : -SpawnDistance;
+                if (a->HasComponent<Termina::Transform>()) {
+                    a->GetComponent<Termina::Transform>().SetPosition(glm::vec3(0.0f, 0.0f, playerPos.z + sideX));
+                    a->GetComponent<Termina::Transform>().SetEulerAngles(glm::vec3(0.0f, 90.0f, 0.0f));
+                }
+                if (a->HasComponent<ObstacleComponent>()) {
+                    auto& oc = a->GetComponent<ObstacleComponent>();
+                    oc.SetType(ObstacleType::Z);
+                    oc.SetSide(isRight ? ObstacleComponent::Side::Right : ObstacleComponent::Side::Left);
+                }
+            }
+        }
     }
 }
-
-void ProceduralGenerator::AddPrefab(const Prefab& prefab)
-{
-    if (prefab.IsValid()) m_Pool.push_back(prefab);
-}
-
-void ProceduralGenerator::AddPrefabY(const Prefab& prefab)
-{
-    if (prefab.IsValid()) m_PoolY.push_back(prefab);
-}
-
-void ProceduralGenerator::ClearPool(){ m_Pool.clear(); }
-
-void ProceduralGenerator::ClearPoolY(){ m_PoolY.clear(); }

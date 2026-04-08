@@ -19,7 +19,7 @@ public:
 	void Start()override;
 
 	void Jump(float dt);
-	void Shield();
+    void Shield(float dt);
 
 	PlayerShieldState GetShieldState();
 

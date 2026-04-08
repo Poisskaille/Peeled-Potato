@@ -2,36 +2,29 @@
 
 void PlayerCamera::Serialize(nlohmann::json& out) const
 {
-    //out["Sensitivity"] = Sensitivity;
-    //out["Pitch"] = Pitch;
-    //out["Yaw"] = Yaw;
 }
 
 void PlayerCamera::Deserialize(const nlohmann::json& in)
 {
-    //if (in.contains("Sensitivity")) Sensitivity = in["Sensitivity"];
-    //if (in.contains("Pitch"))       Pitch = in["Pitch"];
-    //if (in.contains("Yaw"))         Yaw = in["Yaw"];
 }
 
 void PlayerCamera::Update(float dt)
 {
-    //glm::vec2 mouseDelta = Input::GetMouseDelta();
+    bool left = Input::IsKeyHeld(Termina::Key::A);
+    bool right = Input::IsKeyHeld(Termina::Key::E);
 
-    //Yaw += mouseDelta.x * Sensitivity;
-    //Pitch += mouseDelta.y * Sensitivity;
+    if (left && !right) m_TargetYawOffset = -m_SideLookAngle;
+    else if (right && !left) m_TargetYawOffset = m_SideLookAngle;
+    else m_TargetYawOffset = 0.0f;
 
-    //Pitch = glm::clamp(Pitch, -89.0f, 89.0f);
+    float t = 1.0f - std::exp(-m_LerpSpeed * dt);
+    m_CurrentYawOffset = glm::mix(m_CurrentYawOffset, m_TargetYawOffset, t);
 
-    //glm::quat yawQuat = glm::angleAxis(glm::radians(-Yaw), glm::vec3(0, 1, 0));
-    //glm::quat pitchQuat = glm::angleAxis(glm::radians(Pitch), glm::vec3(1, 0, 0));
-
-    //m_Transform->SetRotation(yawQuat * pitchQuat);
+    glm::quat yawQuat = glm::angleAxis(glm::radians(-m_CurrentYawOffset), glm::vec3(0, 1, 0));
+    m_Transform->SetRotation(yawQuat * m_BaseRotation);
 }
 
 void PlayerCamera::Start()
 {
-/*	cam = m_Owner->GetComponent<Termina::CameraComponent>();
-	Input::SetCursorLocked(true);
-	Input::SetCursorVisible(false)*/;
+    m_BaseRotation = m_Transform->GetRotation();
 }

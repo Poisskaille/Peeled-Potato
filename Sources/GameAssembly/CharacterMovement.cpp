@@ -2,8 +2,8 @@
 
 void CharacterMovement::Update(float dt)
 {
-	Jump(dt);
-	Shield();
+    Jump(dt);
+	Shield(dt);
 }
 
 void CharacterMovement::Start()
@@ -16,7 +16,7 @@ void CharacterMovement::Jump(float dt)
 	if (Input::IsKeyPressed(Termina::Key::Space)) rb->AddImpulse(glm::vec3(0,5,0));
 }
 
-void CharacterMovement::Shield()
+void CharacterMovement::Shield(float dt)
 {
 	if (shieldState != PlayerShieldState::None)
 	{
@@ -27,9 +27,9 @@ void CharacterMovement::Shield()
 			delay = 0.f;
 		}
 	}
-	else {
-		if (Input::IsKeyPressed(Termina::MouseButton::Left)) shieldState = PlayerShieldState::Left;
-		else if (Input::IsKeyPressed(Termina::MouseButton::Right)) shieldState = PlayerShieldState::Right;
+    else {
+		if (Input::IsMouseButtonPressed(Termina::MouseButton::Left)) shieldState = PlayerShieldState::Left;
+		else if (Input::IsMouseButtonPressed(Termina::MouseButton::Right)) shieldState = PlayerShieldState::Right;
 	}
 }
 
