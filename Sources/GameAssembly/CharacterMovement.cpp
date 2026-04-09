@@ -1,7 +1,12 @@
 #include "CharacterMovement.hpp"
+#include "GameManager.hpp"
 
 void CharacterMovement::Update(float dt)
 {
+	GameManager* gm = GameManager::Instance();
+	if (gm && !gm->IsPlaying())
+		return;
+
     Jump(dt);
 	Shield(dt);
 }

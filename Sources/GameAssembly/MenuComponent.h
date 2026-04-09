@@ -6,6 +6,10 @@ public:
     MenuComponent() = default;
     MenuComponent(Termina::Actor* owner) : TerminaScript::ScriptableComponent(owner) {}
 
+    static MenuComponent* Instance();
+    void Start() override;
+    void OpenMenu();
+
     void OnPlay() override; // Ajout pour initialiser la caméra au lancement !
     void Update(float deltaTime) override;
     void Inspect() override;
@@ -16,7 +20,8 @@ public:
 
 private:
     bool m_isMenuOpen = true;
-    
+    static MenuComponent* instance;
+
     // Le nom de l'acteur qui possède la caméra de jeu
     char m_playerCameraName[256] = "PlayerCamera"; 
     

@@ -1,5 +1,6 @@
 #include "ProceduralGenerator.hpp"
 #include "ObstacleComponent.hpp"
+#include "GameManager.hpp"
 #include <random>
 #include <Termina/Core/Logger.hpp>
 #include <Termina/Renderer/UIUtils.hpp>
@@ -64,6 +65,10 @@ void ProceduralGenerator::Start()
 
 void ProceduralGenerator::Update(float dt)
 {
+	GameManager* gm = GameManager::Instance();
+	if (gm && !gm->IsPlaying())
+		return;
+
 	SpawnObstacleX(dt);
 	SpawnObstacleZ(dt);
 }
@@ -130,6 +135,9 @@ void ProceduralGenerator::SpawnObstacleX(float dt)
                 }
                 if (a->HasComponent<ObstacleComponent>()) {
                     a->GetComponent<ObstacleComponent>().SetType(ObstacleType::X);
+                    if(GameManager::Instance()) {
+                        a->GetComponent<ObstacleComponent>().SetGeneration(GameManager::Instance()->GetGeneration());
+                    }
                 }
             }
         }
@@ -164,6 +172,10 @@ void ProceduralGenerator::SpawnObstacleZ(float dt)
                     auto& oc = a->GetComponent<ObstacleComponent>();
                     oc.SetType(ObstacleType::Z);
                     oc.SetSide(isRight ? ObstacleComponent::Side::Right : ObstacleComponent::Side::Left);
+
+                    if(GameManager::Instance()) {
+                        oc.SetGeneration(GameManager::Instance()->GetGeneration());
+                    }
                 }
             }
         }

@@ -3,10 +3,57 @@
 #include <Termina/Core/Application.hpp>
 #include <Termina/World/World.hpp>
 #include <Termina/Renderer/Components/CameraComponent.hpp> // <-- AJOUT IMPORTANT
+#include "GameManager.hpp"
+
+MenuComponent* MenuComponent::instance = nullptr;
+
+void MenuComponent::Start()
+{
+	instance = this;
+	m_isMenuOpen = true;
+}
+
+MenuComponent* MenuComponent::Instance()
+{
+	return instance;
+}
+
+void MenuComponent::OpenMenu()
+{
+	TN_INFO(">>> OpenMenu called!");
+	m_isMenuOpen = true;
+	Termina::World* world = m_Owner->GetParentWorld();
+	if (world) {
+		Termina::Actor* menuCamActor = world->GetActorByName(m_menuCameraName);
+		Termina::Actor* playerActor = world->GetActorByName(m_playerCameraName);
+
+		if (!menuCamActor) {
+			TN_ERROR("OpenMenu: Actor Camera Menu introuvable ! Nom cherche : %s", m_menuCameraName);
+		}
+		if (!playerActor) {
+			TN_ERROR("OpenMenu: Actor Camera Joueur introuvable ! Nom cherche : %s", m_playerCameraName);
+		}
+
+		if (playerActor && playerActor->HasComponent<Termina::CameraComponent>()) {
+			playerActor->GetComponent<Termina::CameraComponent>().SetPrimary(false);
+			TN_INFO("OpenMenu: Camera Joueur desactivee.");
+		}
+
+		if (menuCamActor && menuCamActor->HasComponent<Termina::CameraComponent>()) {
+			menuCamActor->GetComponent<Termina::CameraComponent>().SetPrimary(true);
+			world->SetMainCamera(menuCamActor);
+			TN_INFO("OpenMenu: Camera du Menu reactivee avec succes !");
+		}
+	} else {
+		TN_ERROR("OpenMenu: world est nullptr !");
+	}
+}
 
 void MenuComponent::OnPlay()
 {
-    Termina::World* world = m_Owner->GetParentWorld();
+	Start(); // Important pour initialiser les variables du composant
+
+	Termina::World* world = m_Owner->GetParentWorld();
     if (world) {
         // Obtenir les acteurs
         Termina::Actor* menuCamActor = world->GetActorByName(m_menuCameraName);
@@ -30,6 +77,12 @@ void MenuComponent::OnPlay()
 
 void MenuComponent::Update(float deltaTime)
 {
+	// AJOUT: Si le jeu n'est plus en cours (Game Over) et que le menu est fermé, on force son ouverture
+	if (GameManager::Instance() && !GameManager::Instance()->IsPlaying() && !m_isMenuOpen) {
+		TN_INFO("MenuComponent detecte le Game Over, retour forcé au menu !");
+		OpenMenu();
+	}
+
 	if (!m_isMenuOpen) return;
 
 	// --- 1. TAILLE DE LA FENETRE ---
@@ -57,7 +110,22 @@ void MenuComponent::Update(float deltaTime)
 	float textWidth = ImGui::CalcTextSize(titleText).x;
 	ImGui::SetCursorPosX((menuWidth - textWidth) * 0.5f);
 	ImGui::Text(titleText);
-	
+
+	// Affichage du score
+	if (GameManager::Instance()) {
+		float best = GameManager::Instance()->GetBestScore();
+		float current = GameManager::Instance()->GetPlayerScore();
+
+		if (best > 0.0f) {
+			ImGui::Spacing();
+			char scoreText[128];
+			snprintf(scoreText, sizeof(scoreText), "Dernier temps : %.1f s   |   Meilleur temps : %.1f s", current, best);
+			float sWidth = ImGui::CalcTextSize(scoreText).x;
+			ImGui::SetCursorPosX((menuWidth - sWidth) * 0.5f);
+			ImGui::Text(scoreText);
+		}
+	}
+
 	ImGui::Spacing();
 	ImGui::Separator();
 	ImGui::Spacing();
@@ -90,10 +158,20 @@ void MenuComponent::Update(float deltaTime)
 			if (playerActor && playerActor->HasComponent<Termina::CameraComponent>()) {
 				playerActor->GetComponent<Termina::CameraComponent>().SetPrimary(true);
 				world->SetMainCamera(playerActor); 
+
+				// Assurons-nous que le joueur (et sa caméra) revient à sa position initiale
+				if (playerActor->HasComponent<Termina::Transform>()) {
+					playerActor->GetComponent<Termina::Transform>().SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
+				}
+
 				TN_DEBUG("Caméra Joueur activée !");
 			} else {
 				TN_ERROR("Impossible de trouver la camera nommée : %s", m_playerCameraName);
 			}
+		}
+
+		if (GameManager::Instance()) {
+			GameManager::Instance()->NewGame();
 		}
 	}
 

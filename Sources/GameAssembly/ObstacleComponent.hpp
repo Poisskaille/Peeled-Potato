@@ -17,20 +17,32 @@ public:
 	ObstacleComponent() = default;
 	ObstacleComponent(Termina::Actor* owner) : TerminaScript::ScriptableComponent(owner) {}
 
-	void Update(float dt)override;
-    void Start() override;
-	void OnCollisionEnter(Termina::Actor* other)override;
+	static std::vector<Termina::Actor*> s_AllObstacles;
+	static void DestroyAllObstacles();
+	void SelfDestroy() { Destroy(m_Owner); }
 
-    void Move(float dt);
+	void Update(float dt)override;
+	void Start() override;
+	void Stop() override;
+	void OnTriggerEnter(Termina::Actor* other)override;
+
+	void Move(float dt);
 	void DeleteObstacle(float dt);
 	
 	void SetType(ObstacleType type);
 	enum Side { Left = -1, Right = 1 };
 	void SetSide(Side s) { m_Side = s; }
 
+    void SetGeneration(int gen) { m_generation = gen; }
+
 private:
 	ObstacleType _type = ObstacleType::X;
 
 	float m_StartDistance = 0.f;
     Side m_Side = Right;
+
+    int m_generation = 0;
+    bool m_destroyedFlag = false;
+
+	Termina::Transform* m_Transform = nullptr;
 };
