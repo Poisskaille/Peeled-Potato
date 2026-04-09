@@ -83,7 +83,22 @@ void MenuComponent::Update(float deltaTime)
 		OpenMenu();
 	}
 
-	if (!m_isMenuOpen) return;
+	if (!m_isMenuOpen) {
+		if (GameManager::Instance() && GameManager::Instance()->IsPlaying()) {
+			// Autoriser le déplacement (on retire NoMove)
+			ImGuiWindowFlags scoreFlags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav;
+			ImGuiViewport* viewport = ImGui::GetMainViewport();
+			ImVec2 centerMenu(ImGui::GetIO().DisplaySize.x * 0.75f, ImGui::GetIO().DisplaySize.y * 0.25f);
+			// On place la fenêtre au premier lancement, l'utilisateur peut ensuite la bouger
+			ImGui::SetNextWindowPos(centerMenu, ImGuiCond_FirstUseEver, ImVec2(1.0f, 0.0f));
+			ImGui::SetNextWindowBgAlpha(0.35f);
+			if (ImGui::Begin("ScoreOverlay", nullptr, scoreFlags)) {
+				ImGui::Text("Score: %.1f", GameManager::Instance()->GetPlayerScore());
+			}
+			ImGui::End();
+		}
+		return;
+	}
 
 	// --- 1. TAILLE DE LA FENETRE ---
 	// Modifie ces valeurs pour changer la taille globale de ton menu
