@@ -1,53 +1,41 @@
-# TERMINA ENGINE : 1 WEEK TO MAKE IT HAPPEN
+Projet Flappy Bird
+Ce projet consiste en une réinterprétation 3D du classique Flappy Bird, développée en C++ sur une période de trois semaines. Le jeu s'appuie sur Termina, un moteur de jeu custom.
 
-![](.github/image.png)
+### 👥 Développeurs
+Kiliann Pommez
 
-Termina is a game engine made in about a week (screenshot shows engine state deadline of March 16th 2026).
-Other features will be pushed depending on demand from the students using it.
+Adrien Moreau
 
-## Features made in 5 days
+### 🛠️ Stack Technique
+Langage : C++17 / C++20
 
-- Vulkan/Metal rendering
-- macOS/Windows/Linux support
-- Audio system with spatialization
-- Input system (keyboard, mouse, gamepad)
-- C++ scripting with hot-reload
-- Automatic shader hot reload
-- Actor model and world serialization/deserialization
-- Asset system with ref-counting
-- Fully fledged editor, launcher, and project system
-- Physics system
-- Physically based BRDF
-- Point/Spot/Directional lights
-- Deferred shading
-- CPU frustum culling
-- Raytraced shadows
-- Procedural sky
-- FXAA
-- Debug renderer
-- HDR rendering
+Moteur : Termina Engine (Custom)
 
-## Building
+Graphismes : Vulkan 
 
-```
-xmake
-xmake run Editor
-```
+### 🏗️ Architecture du Moteur "Termina"
+Le moteur a été conçu pour répondre aux contraintes d'un développement rapide (3 semaines) tout en gérant une perspective 3D.
 
-woaw!
+Points clés de l'implémentation :
+Gestionnaire de Scène : Système de cycle de vie des objets (Update/Draw).
 
-## Dependencies
+Pipeline de Rendu : Gestion des transformations 3D (Matrices Model-View-Projection).
 
-- cgltf
-- DirectX Shader Compiler
-- glfw
-- GLM
-- ImGui
-- Jolt
-- nlohmann/json
-- Metal Shader Converter
-- MikkTSpace
-- miniaudio
-- stb_image
-- Vulkan Memory Allocator
-- Volk
+Gestion des Entrées : Abstraction des inputs clavier/souris pour le contrôle du "saut".
+
+### 🎮 Le Jeu : Flappy Bird 3D
+L'objectif était de transposer le gameplay 2D addictif dans un espace tridimensionnel tout en maintenant une lisibilité de l'action.
+
+## Input :
+- barre espace pour sauter
+
+### 🚀 Installation et Compilation
+## Prérequis :
+
+Compilateur supportant le C++17 (GCC, Clang, ou MSVC).
+Instalation de xmake pour pouvoir lancer le projet
+dans le terminal entrer "xmake" puis "xmake run Editor".
+
+Une fois le moteur lancer aller dans World > Open > Assets > Worlds > CustomScene > Sceneplayer
+
+Puis lancer le jeu en cliquant sur play
