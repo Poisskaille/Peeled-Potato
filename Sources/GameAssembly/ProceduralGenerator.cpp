@@ -1,6 +1,7 @@
 #include "ProceduralGenerator.hpp"
 #include "ObstacleComponent.hpp"
 #include "GameManager.hpp"
+#include "RandomComponent.hpp"
 #include <random>
 #include <Termina/Core/Logger.hpp>
 #include <Termina/Renderer/UIUtils.hpp>
@@ -138,6 +139,13 @@ void ProceduralGenerator::SpawnObstacleX(float dt)
                     if(GameManager::Instance()) {
                         a->GetComponent<ObstacleComponent>().SetGeneration(GameManager::Instance()->GetGeneration());
                     }
+                }
+                std::uniform_real_distribution<float> chance(0.0f, 1.0f);
+                if (chance(rng()) <= (1.0f / 3.0f)) {
+                    RandomComponent* rc = new RandomComponent();
+                    std::uniform_int_distribution<int> flip(0,1);
+                    rc->StartRotate = (flip(rng()) == 0);
+                    a->AddComponentRaw(rc);
                 }
             }
         }

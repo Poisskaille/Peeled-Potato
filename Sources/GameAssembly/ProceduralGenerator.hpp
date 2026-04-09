@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Termina/Scripting/API/ScriptingAPI.hpp>
+#include "RandomComponent.hpp"
 #include <vector>
 
 using namespace TerminaScript;
