@@ -20,15 +20,9 @@ public:
 	void Start()override;
 
 private:
-	//Termina::CameraComponent cam;
-
-	//float Sensitivity = 0.1f;
-	//float Pitch = 0.0f;
-	//float Yaw = 0.0f;
-    // Smooth side-look
 	float m_CurrentYawOffset = 0.0f;
 	float m_TargetYawOffset = 0.0f;
-	float m_SideLookAngle = 20.0f; // degrees
-	float m_LerpSpeed = 6.0f; // higher is faster
+	float m_SideLookAngle = 90.0f;
+	float m_LerpSpeed = 6.0f;
 	glm::quat m_BaseRotation = glm::quat(1,0,0,0);
 };
