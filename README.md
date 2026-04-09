@@ -28,6 +28,8 @@ L'objectif était de transposer le gameplay 2D addictif dans un espace tridimens
 
 ## Input :
 - barre espace pour sauter
+- A et E pour regarder a gauche et a droite
+- Clic gauche et droit pour bloquer les projectiles venant de la gauche/droite
 
 ### 🚀 Installation et Compilation
 ## Prérequis :
