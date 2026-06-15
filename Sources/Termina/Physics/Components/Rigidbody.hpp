@@ -17,7 +17,7 @@ namespace Termina {
     public:
         Rigidbody() = default;
         Rigidbody(Actor* owner) : Component(owner) {}
-        ~Rigidbody() override = default;
+        ~Rigidbody() override { OnStop(); }
 
         // --- Properties (serialized, editable in inspector) ---
 

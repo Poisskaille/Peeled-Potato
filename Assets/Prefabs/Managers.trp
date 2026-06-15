@@ -1,0 +1,56 @@
+{
+    "actors": [
+        {
+            "active": true,
+            "components": [
+                {
+                    "active": true,
+                    "data": {
+                        "position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "type": "Transform"
+                },
+                {
+                    "active": true,
+                    "data": {},
+                    "type": "GameManager"
+                },
+                {
+                    "active": true,
+                    "data": {
+                        "prefabsX": [
+                            "Assets\\Prefabs\\Obstacle.trp"
+                        ],
+                        "prefabsZ": [
+                            "Assets\\Prefabs\\Obstacle.trp"
+                        ],
+                        "spawnDistance": 25.0,
+                        "spawnIntervalX": 1.0,
+                        "spawnIntervalZ": 1.2000000476837158,
+                        "spread": 20.0
+                    },
+                    "type": "Procedural Generator"
+                }
+            ],
+            "id": "7106026050305737530",
+            "name": "Managers",
+            "parentId": null
+        }
+    ],
+    "version": 1
+}

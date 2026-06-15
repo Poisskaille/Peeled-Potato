@@ -4,6 +4,8 @@ build
 compile_commands.json
 .cache
 .vscode
+.vs
+.ini
 .claude
 .zed
 vsxmake2022
